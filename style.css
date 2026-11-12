@@ -16,25 +16,15 @@ body {
 
 /* Кнопка музыки */
 .music-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s;
-    backdrop-filter: blur(5px);
+    position: fixed; top: 20px; right: 20px; width: 50px; height: 50px;
+    border-radius: 50%; background: rgba(255, 255, 255, 0.15); border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white; font-size: 1.5rem; cursor: pointer; z-index: 10;
+    transition: all 0.3s; backdrop-filter: blur(5px);
 }
 .music-btn:hover { background: rgba(255, 255, 255, 0.3); transform: scale(1.1); }
 
 .container {
-    position: relative; z-index: 2; max-width: 720px; width: 100%;
+    position: relative; z-index: 2; max-width: 800px; width: 100%;
     background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 24px; padding: 32px 24px; backdrop-filter: blur(12px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
@@ -78,30 +68,96 @@ body {
 }
 .answer-btn:hover { background: rgba(255, 216, 107, 0.25); border-color: #ffd86b; transform: translateX(5px); }
 
-/* Ёлка */
-.tree-area { display: flex; flex-direction: column; align-items: center; gap: 24px; }
-.tree { position: relative; width: 220px; height: 320px; display: flex; flex-direction: column; align-items: center; }
-.tree-body {
-    position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
-    width: 0; height: 0; border-left: 90px solid transparent; border-right: 90px solid transparent;
-    border-bottom: 220px solid #1e7b3f; filter: drop-shadow(0 0 12px rgba(30, 123, 63, 0.6));
+/* =========================================
+   НОВАЯ ЁЛКА (Больше и реалистичнее)
+   ========================================= */
+.tree-area { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+.tree { 
+    position: relative; 
+    width: 320px; 
+    height: 440px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: flex-end;
+    margin: 0 auto;
 }
-.tree-body::before {
-    content: ''; position: absolute; top: 60px; left: -70px; width: 0; height: 0;
-    border-left: 70px solid transparent; border-right: 70px solid transparent; border-bottom: 160px solid #27a355;
+
+/* Ствол */
+.tree-trunk { 
+    position: absolute; 
+    bottom: 0; 
+    width: 40px; 
+    height: 60px; 
+    background: linear-gradient(90deg, #4a2c16, #7a4b2a, #4a2c16); 
+    border-radius: 4px;
+    z-index: 1;
 }
-.tree-trunk { position: absolute; bottom: 0; width: 30px; height: 40px; background: #6b3e1f; border-radius: 4px; }
+
+/* Слои (ветки) */
+.tree-layer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0; 
+    border-left: solid transparent; 
+    border-right: solid transparent; 
+    border-bottom: solid #1e7b3f;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4));
+    z-index: 2;
+}
+
+/* Верхний ярус */
+.tree-layer-top {
+    bottom: 210px;
+    border-left-width: 90px; 
+    border-right-width: 90px; 
+    border-bottom-width: 180px;
+    border-bottom-color: #25934a; /* Чуть светлее */
+    z-index: 4;
+}
+
+/* Средний ярус */
+.tree-layer-mid {
+    bottom: 110px;
+    border-left-width: 140px; 
+    border-right-width: 140px; 
+    border-bottom-width: 200px;
+    border-bottom-color: #1e7b3f;
+    z-index: 3;
+}
+
+/* Нижний ярус */
+.tree-layer-bot {
+    bottom: 0;
+    border-left-width: 190px; 
+    border-right-width: 190px; 
+    border-bottom-width: 200px;
+    border-bottom-color: #155e2f; /* Темнее */
+    z-index: 2;
+}
+
+/* Звезда */
 .star {
-    position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-    font-size: 2rem; animation: starPulse 2s ease-in-out infinite; z-index: 3; cursor: pointer; transition: transform 0.2s;
+    position: absolute; 
+    top: -10px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    font-size: 3rem; 
+    animation: starPulse 2s ease-in-out infinite; 
+    z-index: 10; 
+    cursor: pointer; 
+    transition: transform 0.2s;
 }
 .star:hover { transform: translateX(-50%) scale(1.2); }
 @keyframes starPulse {
-    0%, 100% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 0 6px #ffd86b); }
-    50% { transform: translateX(-50%) scale(1.15); filter: drop-shadow(0 0 16px #ffd86b); }
+    0%, 100% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 0 10px #ffd86b); }
+    50% { transform: translateX(-50%) scale(1.15); filter: drop-shadow(0 0 25px #ffd86b); }
 }
 
-.toys { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; max-width: 450px; }
+/* Игрушки на ёлке */
+.toys { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; max-width: 550px; }
 .toy {
     width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
     font-size: 1.8rem; cursor: grab; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.25);
@@ -109,13 +165,22 @@ body {
 }
 .toy:hover { transform: scale(1.15) rotate(-6deg); box-shadow: 0 0 18px rgba(255, 216, 107, 0.6); border-color: #ffd86b; }
 .toy.used { opacity: 0.25; pointer-events: none; transform: scale(0.8); }
+
 .toy.on-tree {
-    position: absolute; animation: dropIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    cursor: default; z-index: 4; width: 42px; height: 42px; font-size: 1.4rem;
+    position: absolute; 
+    animation: dropIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: default; 
+    z-index: 5; 
+    width: 48px; height: 48px; font-size: 1.8rem;
     background: transparent; border: none; box-shadow: none;
+    /* Убираем transform, так как он будет задан через JS */
 }
-@keyframes dropIn { 0% { transform: scale(0) rotate(-180deg); } 100% { transform: scale(1) rotate(0deg); } }
-.counter { text-align: center; margin: 20px 0; color: #ffd86b; font-weight: 600; }
+@keyframes dropIn { 
+    0% { transform: scale(0) translate(-50%, -50%) rotate(-180deg); } 
+    100% { transform: scale(1) translate(-50%, -50%) rotate(0deg); } 
+}
+
+.counter { text-align: center; margin: 20px 0; color: #ffd86b; font-weight: 600; font-size: 1.2rem;}
 
 /* Результат */
 .card {
@@ -130,7 +195,6 @@ body {
 .card-text { font-size: 1.1rem; line-height: 1.6; color: #f0f7ff; margin-bottom: 16px; }
 .card-sign { font-style: italic; color: #a8c4dd; font-size: 0.9rem; }
 
-/* Глобальный счетчик */
 .global-counter {
     text-align: center; background: rgba(0, 0, 0, 0.2); border-radius: 12px;
     padding: 12px; margin-bottom: 24px; font-size: 1rem; color: #ffd86b; font-weight: bold;
@@ -139,10 +203,18 @@ body {
 .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .actions .btn { margin: 0; }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .container { padding: 24px 16px; }
     .toy { width: 48px; height: 48px; font-size: 1.5rem; }
-    .tree { width: 180px; height: 280px; }
-    .tree-body { border-left-width: 75px; border-right-width: 75px; border-bottom-width: 190px; }
+    .tree { width: 260px; height: 380px; }
+    
+    /* Уменьшаем слои для мобильных */
+    .tree-layer-top { border-left-width: 70px; border-right-width: 70px; border-bottom-width: 150px; bottom: 180px; }
+    .tree-layer-mid { border-left-width: 115px; border-right-width: 115px; border-bottom-width: 170px; bottom: 90px; }
+    .tree-layer-bot { border-left-width: 155px; border-right-width: 155px; border-bottom-width: 180px; bottom: 0; }
+    .tree-trunk { height: 40px; width: 30px; }
+    .star { font-size: 2.5rem; top: -5px; }
+    
+    .toy.on-tree { width: 38px; height: 38px; font-size: 1.4rem; }
     .music-btn { top: 10px; right: 10px; width: 40px; height: 40px; font-size: 1.2rem; }
 }
