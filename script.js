@@ -106,13 +106,11 @@ function initTreeGame() {
     document.getElementById('toyCount').textContent = '0';
     document.getElementById('finishBtn').classList.add('hidden');
 
-    // Очищаем ёлку от старых игрушек
     document.querySelectorAll('.toy.on-tree').forEach(t => t.remove());
 
     const toysBox = document.getElementById('toysBox');
     toysBox.innerHTML = '';
 
-    // Берем все игрушки (или 14 случайных для разнообразия)
     const shuffled = [...toyEmojis].sort(() => Math.random() - 0.5).slice(0, 14);
 
     shuffled.forEach(emoji => {
@@ -138,7 +136,6 @@ function handleDragStart(e) {
 
 function handleDrop(e) {
     e.preventDefault();
-    // Убрали проверку на 'used', теперь можно брать сколько угодно раз
     if (!draggedToy) return;
 
     const tree = document.getElementById('tree');
@@ -147,8 +144,8 @@ function handleDrop(e) {
     let x = e.clientX - treeRect.left;
     let y = e.clientY - treeRect.top;
 
-    // Проверка границ (чтобы не вешали мимо)
-    if (x < 10 || x > treeRect.width - 10 || y < 30 || y > treeRect.height - 20) {
+    // Проверка границ (чтобы игрушки не висели в воздухе рядом с елкой)
+    if (x < 20 || x > treeRect.width - 20 || y < 30 || y > treeRect.height - 20) {
         draggedToy.style.opacity = '1';
         draggedToy = null;
         return;
@@ -156,7 +153,6 @@ function handleDrop(e) {
 
     createPlacedToy(draggedToy.textContent, x, y);
     
-    // Возвращаем прозрачность (игрушка не исчезает)
     draggedToy.style.opacity = '1';
     draggedToy = null;
 }
