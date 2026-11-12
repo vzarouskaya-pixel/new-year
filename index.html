@@ -18,7 +18,7 @@
         <!-- ЭКРАН 1: Приветствие -->
         <section class="screen active" id="screen-start">
             <h1 class="title">🎄 Наряди ёлку желаний 🎄</h1>
-            <p class="subtitle">Ответь на 5 вопросов, наряди пушистую ёлку — и получи своё уникальное новогоднее пожелание!</p>
+            <p class="subtitle">Ответь на 5 вопросов, наряди ёлку в уютной комнате — и получи своё уникальное новогоднее пожелание!</p>
             <button class="btn" onclick="startQuiz()">Начать ✨</button>
         </section>
 
@@ -29,77 +29,52 @@
             <div class="answers" id="answersBox"></div>
         </section>
 
-        <!-- ЭКРАН 3: Ёлка -->
+        <!-- ЭКРАН 3: Ёлка в комнате -->
         <section class="screen" id="screen-tree">
             <h2 class="section-title">Наряди ёлку! 🎁</h2>
-            <p class="hint">Перетащи 12 игрушек на ёлку. Игрушки можно брать бесконечно!</p>
+            <p class="hint">Перетащи 12 игрушек на ёлку. Бери любые и сколько хочешь!</p>
             
-            <div class="tree-area">
-                <div class="tree" id="tree">
+            <div class="room-area">
+                <!-- Фон комнаты (стена) -->
+                <div class="room-bg">
                     
-                    <!-- НОВАЯ МУЛЬТЯШНАЯ ЕЛКА (SVG) -->
-                    <svg class="tree-svg" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <!-- Градиент для пушистых веток -->
-                            <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#2cb34a" />
-                                <stop offset="50%" stop-color="#1a8b36" />
-                                <stop offset="100%" stop-color="#0f5e22" />
-                            </linearGradient>
-                            <!-- Градиент для ствола -->
-                            <linearGradient id="woodGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#3e2010" />
-                                <stop offset="50%" stop-color="#7a4b2a" />
-                                <stop offset="100%" stop-color="#3e2010" />
-                            </linearGradient>
-                            <!-- Тень под елкой -->
-                            <radialGradient id="shadowGrad" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="rgba(0,0,0,0.4)" />
-                                <stop offset="100%" stop-color="rgba(0,0,0,0)" />
-                            </radialGradient>
-                        </defs>
+                    <!-- Окно (сзади) -->
+                    <div class="window">
+                        <div class="window-frame">
+                            <div class="window-glass"></div>
+                            <div class="window-divider-v"></div>
+                            <div class="window-divider-h"></div>
+                        </div>
+                    </div>
 
-                        <!-- Тень на полу -->
-                        <ellipse cx="200" cy="560" rx="150" ry="30" fill="url(#shadowGrad)" />
+                    <!-- Камин (слева) -->
+                    <div class="fireplace">
+                        <div class="fireplace-top"></div>
+                        <div class="fireplace-body">
+                            <div class="fire-glow"></div>
+                            <div class="fire">
+                                <div class="flame flame1"></div>
+                                <div class="flame flame2"></div>
+                                <div class="flame flame3"></div>
+                            </div>
+                        </div>
+                        <div class="fireplace-base"></div>
+                        <!-- Подарки у камина -->
+                        <div class="gift gift-1">🎁</div>
+                        <div class="gift gift-2">📦</div>
+                    </div>
 
-                        <!-- Ствол -->
-                        <rect x="180" y="500" width="40" height="70" fill="url(#woodGrad)" rx="5" />
+                    <!-- Елка (по центру) -->
+                    <div class="tree" id="tree">
+                        <!-- Сама ёлка (картинка) -->
+                        <img src="https://pngimg.com/uploads/christmas_tree/christmas_tree_PNG43.png" alt="Ёлка" class="tree-img">
+                        <!-- Звезда -->
+                        <div class="star" id="star">⭐</div>
+                    </div>
 
-                        <!-- Ярусы (пушистые облака) -->
-                        <g fill="url(#greenGrad)" stroke="#145a26" stroke-width="3">
-                            <!-- 5-й ярус (самый нижний) -->
-                            <path d="M200 480 C 80 480 20 460 20 420 C 20 380 80 360 130 380 C 110 350 150 330 200 340 C 250 330 290 350 270 380 C 320 360 380 380 380 420 C 380 460 320 480 200 480 Z" />
-                            
-                            <!-- 4-й ярус -->
-                            <path d="M200 400 C 100 400 40 380 40 340 C 40 300 90 280 140 300 C 120 270 160 250 200 260 C 240 250 280 270 260 300 C 310 280 360 300 360 340 C 360 380 300 400 200 400 Z" />
-
-                            <!-- 3-й ярус -->
-                            <path d="M200 320 C 120 320 70 300 70 260 C 70 220 110 200 150 220 C 140 190 170 170 200 180 C 230 170 260 190 250 220 C 290 200 330 220 330 260 C 330 300 280 320 200 320 Z" />
-
-                            <!-- 2-й ярус -->
-                            <path d="M200 240 C 140 240 100 220 100 180 C 100 140 130 130 160 150 C 155 120 180 100 200 110 C 220 100 245 120 240 150 C 270 130 300 140 300 180 C 300 220 260 240 200 240 Z" />
-
-                            <!-- 1-й ярус (верхушка) -->
-                            <path d="M200 160 C 150 160 120 140 120 100 C 120 70 150 60 170 75 C 170 50 185 40 200 40 C 215 40 230 50 230 75 C 250 60 280 70 280 100 C 280 140 250 160 200 160 Z" />
-                        </g>
-
-                        <!-- Блики и снег на ветках для мультяшности -->
-                        <g fill="#ffffff" opacity="0.3">
-                            <ellipse cx="100" cy="430" rx="20" ry="8" />
-                            <ellipse cx="300" cy="430" rx="25" ry="10" />
-                            <ellipse cx="140" cy="350" rx="15" ry="6" />
-                            <ellipse cx="260" cy="350" rx="15" ry="6" />
-                            <ellipse cx="160" cy="270" rx="12" ry="5" />
-                            <ellipse cx="240" cy="270" rx="12" ry="5" />
-                            <ellipse cx="170" cy="190" rx="10" ry="4" />
-                            <ellipse cx="230" cy="190" rx="10" ry="4" />
-                        </g>
-                    </svg>
-
-                    <!-- Звезда (поверх SVG) -->
-                    <div class="star" id="star">⭐</div>
                 </div>
                 
+                <!-- Лоток с игрушками (спереди) -->
                 <div class="toys" id="toysBox"></div>
             </div>
             
