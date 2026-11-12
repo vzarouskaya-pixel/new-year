@@ -144,8 +144,7 @@ function handleDrop(e) {
     let x = e.clientX - treeRect.left;
     let y = e.clientY - treeRect.top;
 
-    // Проверка: если бросили мимо (слишком далеко в стороны или ниже ствола)
-    // Зона ограничена примерными границами веток
+    // Проверка границ, чтобы игрушки не висели в воздухе
     if (x < 10 || x > treeRect.width - 10 || y < 30 || y > treeRect.height - 20) {
         draggedToy.style.opacity = '1';
         draggedToy = null;
@@ -162,7 +161,6 @@ function placeToyRandom(toy) {
     const tree = document.getElementById('tree');
     const treeRect = tree.getBoundingClientRect();
     
-    // Случайные координаты, ближе к центру ёлки (чтобы не попадали на пустые края)
     const x = (Math.random() * 0.6 + 0.2) * treeRect.width; 
     const y = (Math.random() * 0.6 + 0.15) * treeRect.height; 
     
@@ -215,12 +213,6 @@ function showResult() {
     const subType = userAnswers[2] || 'magic';
     const vibeType = userAnswers[3] || 'cocoa';
 
-    const main = wishes[mainType];
-    const sub = wishes[subType];
-    const vibe = wishes[vibeType];
-
-    document.getElementById('resultEmoji').textContent = main.e;
-    document.getElementById('resultTitle').textContent =
     const main = wishes[mainType];
     const sub = wishes[subType];
     const vibe = wishes[vibeType];
