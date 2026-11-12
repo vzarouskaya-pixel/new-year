@@ -1,8 +1,4 @@
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     min-height: 100vh;
@@ -16,52 +12,22 @@ body {
     padding: 20px;
 }
 
-#snow { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    pointer-events: none; 
-    z-index: 100;
-}
+#snow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
 
 /* Кнопка музыки */
 .music-btn {
-    position: fixed; 
-    top: 20px; 
-    right: 20px; 
-    width: 50px; 
-    height: 50px;
-    border-radius: 50%; 
-    background: rgba(255, 255, 255, 0.15); 
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: white; 
-    font-size: 1.5rem; 
-    cursor: pointer; 
-    z-index: 101;
-    transition: all 0.3s; 
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: fixed; top: 20px; right: 20px; width: 50px; height: 50px;
+    border-radius: 50%; background: rgba(255, 255, 255, 0.15); border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white; font-size: 1.5rem; cursor: pointer; z-index: 101;
+    transition: all 0.3s; backdrop-filter: blur(5px);
+    display: flex; align-items: center; justify-content: center;
 }
-
-.music-btn:hover { 
-    background: rgba(255, 255, 255, 0.3); 
-    transform: scale(1.1); 
-}
+.music-btn:hover { background: rgba(255, 255, 255, 0.3); transform: scale(1.1); }
 
 .container {
-    position: relative; 
-    z-index: 2; 
-    max-width: 800px; 
-    width: 100%;
-    background: rgba(255, 255, 255, 0.07); 
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 24px; 
-    padding: 32px 24px; 
-    backdrop-filter: blur(12px);
+    position: relative; z-index: 2; max-width: 800px; width: 100%;
+    background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px; padding: 32px 24px; backdrop-filter: blur(12px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
@@ -70,8 +36,7 @@ body {
 @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
 .title {
-    font-size: clamp(1.6rem, 5vw, 2.4rem); 
-    text-align: center;
+    font-size: clamp(1.6rem, 5vw, 2.4rem); text-align: center;
     background: linear-gradient(90deg, #ffd86b, #ff6b9d, #6bffb8, #ffd86b);
     background-size: 300%; -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; margin-bottom: 16px;
@@ -111,7 +76,7 @@ body {
 .room-area {
     position: relative;
     width: 100%;
-    height: 550px;
+    height: 480px; /* Уменьшили высоту комнаты */
     border-radius: 20px;
     overflow: hidden;
     margin-bottom: 20px;
@@ -121,138 +86,66 @@ body {
 
 /* Окно */
 .window {
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    width: 180px;
-    height: 240px;
-    background: #1a2a4a;
-    border: 10px solid #5c4033;
-    border-radius: 4px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    z-index: 1;
-    overflow: hidden;
+    position: absolute; top: 30px; right: 30px; width: 150px; height: 200px;
+    background: #1a2a4a; border: 8px solid #5c4033; border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index: 1; overflow: hidden;
 }
-.window-glass {
-    width: 100%; height: 100%;
-    background: linear-gradient(to bottom, #0f172a 0%, #1e293b 100%);
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
-}
-.window-divider-v { position: absolute; top: 0; left: 50%; width: 8px; height: 100%; background: #5c4033; transform: translateX(-50%); }
-.window-divider-h { position: absolute; top: 50%; left: 0; width: 100%; height: 8px; background: #5c4033; transform: translateY(-50%); }
+.window-glass { width: 100%; height: 100%; background: linear-gradient(to bottom, #0f172a 0%, #1e293b 100%); box-shadow: inset 0 0 30px rgba(0,0,0,0.8); }
+.window-divider-v { position: absolute; top: 0; left: 50%; width: 6px; height: 100%; background: #5c4033; transform: translateX(-50%); }
+.window-divider-h { position: absolute; top: 50%; left: 0; width: 100%; height: 6px; background: #5c4033; transform: translateY(-50%); }
 
 /* Камин */
-.fireplace {
-    position: absolute;
-    bottom: 0;
-    left: 40px;
-    width: 200px;
-    height: 280px;
-    z-index: 1;
-}
-.fireplace-top {
-    width: 100%; height: 20px;
-    background: #4a2c16;
-    border-radius: 5px 5px 0 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-.fireplace-body {
-    width: 100%; height: 200px;
-    background: #5c3a21;
-    position: relative;
-    border: 6px solid #3e2010;
-    border-top: none;
-    box-shadow: inset 0 10px 20px rgba(0,0,0,0.6);
-    overflow: hidden;
-}
-.fireplace-base {
-    width: 120%; height: 20px;
-    background: #3e2010;
-    margin-left: -10%;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.6);
-}
+.fireplace { position: absolute; bottom: 0; left: 30px; width: 160px; height: 240px; z-index: 1; }
+.fireplace-top { width: 100%; height: 15px; background: #4a2c16; border-radius: 5px 5px 0 0; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+.fireplace-body { width: 100%; height: 170px; background: #5c3a21; position: relative; border: 5px solid #3e2010; border-top: none; box-shadow: inset 0 10px 20px rgba(0,0,0,0.6); overflow: hidden; }
+.fireplace-base { width: 120%; height: 15px; background: #3e2010; margin-left: -10%; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.6); }
 
 /* Огонь в камине */
-.fire-glow {
-    position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
-    background: radial-gradient(circle at bottom, rgba(255, 100, 0, 0.6) 0%, transparent 70%);
-    animation: glow 1.5s infinite alternate;
-}
-@keyframes glow {
-    0% { opacity: 0.6; transform: scaleY(1); }
-    100% { opacity: 1; transform: scaleY(1.1); }
-}
-.fire {
-    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 80px; height: 80px;
-}
-.flame {
-    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    border-radius: 50% 50% 20% 20%;
-    animation: flicker 0.1s infinite alternate;
-}
-.flame1 { width: 40px; height: 70px; background: #ff4500; animation-delay: 0s; }
-.flame2 { width: 30px; height: 50px; background: #ff8c00; animation-delay: 0.05s; }
-.flame3 { width: 20px; height: 30px; background: #ffd700; animation-delay: 0.1s; }
-@keyframes flicker {
-    0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
-    100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
-}
+.fire-glow { position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: radial-gradient(circle at bottom, rgba(255, 100, 0, 0.6) 0%, transparent 70%); animation: glow 1.5s infinite alternate; }
+@keyframes glow { 0% { opacity: 0.6; transform: scaleY(1); } 100% { opacity: 1; transform: scaleY(1.1); } }
+.fire { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; }
+.flame { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); border-radius: 50% 50% 20% 20%; animation: flicker 0.1s infinite alternate; }
+.flame1 { width: 30px; height: 50px; background: #ff4500; animation-delay: 0s; }
+.flame2 { width: 20px; height: 40px; background: #ff8c00; animation-delay: 0.05s; }
+.flame3 { width: 15px; height: 25px; background: #ffd700; animation-delay: 0.1s; }
+@keyframes flicker { 0% { transform: translateX(-50%) scale(1) rotate(-2deg); } 100% { transform: translateX(-50%) scale(1.1) rotate(2deg); } }
 
 /* Подарки */
-.gift {
-    position: absolute; font-size: 2.5rem;
-    bottom: 20px; z-index: 2;
-    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
-}
-.gift-1 { left: 150px; animation: bob 2s infinite alternate; }
-.gift-2 { left: 190px; bottom: 10px; font-size: 2rem; animation: bob 2s infinite alternate-reverse; }
+.gift { position: absolute; font-size: 2rem; bottom: 15px; z-index: 2; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
+.gift-1 { left: 120px; animation: bob 2s infinite alternate; }
+.gift-2 { left: 155px; bottom: 5px; font-size: 1.5rem; animation: bob 2s infinite alternate-reverse; }
 
-/* SVG Ёлка */
+/* SVG Ёлка (уменьшена, чтобы не перекрывать интерфейс) */
 .tree {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 360px;
-    height: 520px;
-    z-index: 3;
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    width: 280px; height: 420px; z-index: 3;
 }
-.tree-svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
-}
+.tree-svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6)); }
 
 /* Звезда */
 .star {
-    position: absolute; 
-    top: -15px; 
-    left: 50%; 
-    transform: translateX(-50%);
-    font-size: 3.5rem; 
-    animation: starPulse 2s ease-in-out infinite; 
-    z-index: 10; 
-    cursor: pointer; 
-    transition: transform 0.2s;
-    filter: drop-shadow(0 0 15px #ffd86b);
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    font-size: 3rem; animation: starPulse 2s ease-in-out infinite; z-index: 10; 
+    cursor: pointer; transition: transform 0.2s; filter: drop-shadow(0 0 15px #ffd86b);
 }
 .star:hover { transform: translateX(-50%) scale(1.2); }
-@keyframes starPulse {
-    0%, 100% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 0 10px #ffd86b); }
-    50% { transform: translateX(-50%) scale(1.15); filter: drop-shadow(0 0 25px #ffa500); }
+@keyframes starPulse { 0%, 100% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 0 10px #ffd86b); } 50% { transform: translateX(-50%) scale(1.15); filter: drop-shadow(0 0 25px #ffa500); } }
+
+/* НОВЫЙ БЛОК: Лоток с игрушками (внизу) */
+.toys-wrapper {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 15px;
+    margin-bottom: 15px;
 }
 
-/* Лоток с игрушками */
 .toys { 
-    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; 
-    max-width: 600px; margin-top: 10px; margin-left: auto; margin-right: auto;
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; 
+    max-width: 600px; margin: 0 auto;
 }
 .toy {
-    width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 1.8rem; cursor: grab; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.25);
+    width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; cursor: grab; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.25);
     transition: transform 0.2s, box-shadow 0.2s; user-select: none; touch-action: none;
 }
 .toy:hover { transform: scale(1.15) rotate(-6deg); box-shadow: 0 0 18px rgba(255, 216, 107, 0.6); border-color: #ffd86b; }
@@ -260,16 +153,12 @@ body {
 /* Игрушки на ёлке */
 .toy.on-tree {
     position: absolute; animation: dropIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    cursor: default; z-index: 5; width: 48px; height: 48px; font-size: 1.8rem;
-    background: transparent; border: none; box-shadow: none;
-    transform: translate(-50%, -50%);
+    cursor: default; z-index: 5; width: 42px; height: 42px; font-size: 1.6rem;
+    background: transparent; border: none; box-shadow: none; transform: translate(-50%, -50%);
 }
-@keyframes dropIn { 
-    0% { transform: translate(-50%, -50%) scale(0) rotate(-180deg); } 
-    100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); } 
-}
+@keyframes dropIn { 0% { transform: translate(-50%, -50%) scale(0) rotate(-180deg); } 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); } }
 
-.counter { text-align: center; margin: 20px 0; color: #ffd86b; font-weight: 600; font-size: 1.2rem; }
+.counter { text-align: center; margin: 10px 0 20px; color: #ffd86b; font-weight: 600; font-size: 1.2rem; }
 
 /* Результат */
 .card {
@@ -294,19 +183,20 @@ body {
 /* Мобильная адаптация */
 @media (max-width: 600px) {
     .container { padding: 24px 16px; }
-    .toy { width: 48px; height: 48px; font-size: 1.5rem; }
     
-    .room-area { height: 450px; }
-    .tree { width: 280px; height: 400px; }
-    .star { font-size: 2.5rem; top: -10px; }
-    .toy.on-tree { width: 38px; height: 38px; font-size: 1.4rem; }
+    .room-area { height: 400px; }
+    .tree { width: 220px; height: 340px; }
+    .star { font-size: 2.2rem; top: -5px; }
     
-    .window { width: 120px; height: 160px; top: 20px; right: 20px; }
-    .fireplace { width: 140px; height: 220px; left: 20px; }
-    .fireplace-body { height: 150px; }
-    .fireplace-top { height: 15px; }
-    .gift-1 { left: 100px; font-size: 2rem; }
+    .window { width: 100px; height: 140px; top: 20px; right: 20px; }
+    .fireplace { width: 120px; height: 180px; left: 20px; }
+    .fireplace-body { height: 130px; }
+    .gift-1 { left: 90px; font-size: 1.5rem; }
     .gift-2 { display: none; }
+    
+    .toys-wrapper { padding: 10px; }
+    .toy { width: 42px; height: 42px; font-size: 1.3rem; }
+    .toy.on-tree { width: 34px; height: 34px; font-size: 1.3rem; }
     
     .music-btn { top: 10px; right: 10px; width: 40px; height: 40px; font-size: 1.2rem; }
 }
