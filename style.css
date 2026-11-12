@@ -203,89 +203,43 @@ body {
 }
 
 /* =========================================
-   ЁЛКА
+   НОВАЯ SVG ЁЛКА
    ========================================= */
 .tree-area { 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    gap: 30px; 
+    gap: 20px; 
 }
 
 .tree { 
     position: relative; 
-    width: 320px; 
-    height: 440px; 
+    width: 100%;
+    max-width: 340px; 
+    height: 480px; 
     display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: flex-end;
+    justify-content: center;
     margin: 0 auto;
 }
 
-/* Ствол */
-.tree-trunk { 
-    position: absolute; 
-    bottom: 0; 
-    width: 40px; 
-    height: 60px; 
-    background: linear-gradient(90deg, #4a2c16, #7a4b2a, #4a2c16); 
-    border-radius: 4px;
-    z-index: 1;
-}
-
-/* Слои (ветки) */
-.tree-layer {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0; 
-    height: 0; 
-    border-left: solid transparent; 
-    border-right: solid transparent; 
-    border-bottom: solid #1e7b3f;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4));
-    z-index: 2;
-}
-
-.tree-layer-top {
-    bottom: 210px;
-    border-left-width: 90px; 
-    border-right-width: 90px; 
-    border-bottom-width: 180px;
-    border-bottom-color: #25934a;
-    z-index: 4;
-}
-
-.tree-layer-mid {
-    bottom: 110px;
-    border-left-width: 140px; 
-    border-right-width: 140px; 
-    border-bottom-width: 200px;
-    border-bottom-color: #1e7b3f;
-    z-index: 3;
-}
-
-.tree-layer-bot {
-    bottom: 0;
-    border-left-width: 190px; 
-    border-right-width: 190px; 
-    border-bottom-width: 200px;
-    border-bottom-color: #155e2f;
-    z-index: 2;
+.tree-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible; /* Чтобы тени не обрезались */
 }
 
 /* Звезда */
 .star {
     position: absolute; 
-    top: -10px; 
+    top: -5px; /* Подстраиваем под макушку SVG */
     left: 50%; 
     transform: translateX(-50%);
-    font-size: 3rem; 
+    font-size: 3.5rem; 
     animation: starPulse 2s ease-in-out infinite; 
     z-index: 10; 
     cursor: pointer; 
     transition: transform 0.2s;
+    filter: drop-shadow(0 0 15px #ffd86b);
 }
 
 .star:hover { 
@@ -294,7 +248,7 @@ body {
 
 @keyframes starPulse {
     0%, 100% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 0 10px #ffd86b); }
-    50% { transform: translateX(-50%) scale(1.15); filter: drop-shadow(0 0 25px #ffd86b); }
+    50% { transform: translateX(-50%) scale(1.15); filter: drop-shadow(0 0 25px #ffa500); }
 }
 
 /* Игрушки в лотке */
@@ -320,7 +274,7 @@ body {
     border: 2px solid rgba(255, 255, 255, 0.25);
     transition: transform 0.2s, box-shadow 0.2s; 
     user-select: none;
-    touch-action: none; /* Важно для перетаскивания на мобильных */
+    touch-action: none;
 }
 
 .toy:hover { 
@@ -347,7 +301,7 @@ body {
     background: transparent; 
     border: none; 
     box-shadow: none;
-    transform: translate(-50%, -50%); /* Центрируем по координатам */
+    transform: translate(-50%, -50%);
 }
 
 @keyframes dropIn { 
@@ -437,51 +391,21 @@ body {
 @media (max-width: 600px) {
     .container { padding: 24px 16px; }
     
-    /* Уменьшаем лоток */
     .toy { 
         width: 48px; 
         height: 48px; 
         font-size: 1.5rem; 
     }
     
-    /* Уменьшаем ёлку */
     .tree { 
-        width: 260px; 
         height: 380px; 
-    }
-    
-    .tree-layer-top { 
-        border-left-width: 70px; 
-        border-right-width: 70px; 
-        border-bottom-width: 150px; 
-        bottom: 180px; 
-    }
-    
-    .tree-layer-mid { 
-        border-left-width: 115px; 
-        border-right-width: 115px; 
-        border-bottom-width: 170px; 
-        bottom: 90px; 
-    }
-    
-    .tree-layer-bot { 
-        border-left-width: 155px; 
-        border-right-width: 155px; 
-        border-bottom-width: 180px; 
-        bottom: 0; 
-    }
-    
-    .tree-trunk { 
-        height: 40px; 
-        width: 30px; 
     }
     
     .star { 
         font-size: 2.5rem; 
-        top: -5px; 
+        top: -2px;
     }
     
-    /* Уменьшаем игрушки на ёлке */
     .toy.on-tree { 
         width: 38px; 
         height: 38px; 
