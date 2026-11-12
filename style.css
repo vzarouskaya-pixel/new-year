@@ -23,7 +23,7 @@ body {
     width: 100%; 
     height: 100%; 
     pointer-events: none; 
-    z-index: 100; /* Снег поверх всего */
+    z-index: 100;
 }
 
 /* Кнопка музыки */
@@ -111,11 +111,10 @@ body {
 .room-area {
     position: relative;
     width: 100%;
-    height: 500px;
+    height: 550px; /* Комната чуть выше */
     border-radius: 20px;
     overflow: hidden;
     margin-bottom: 20px;
-    /* Фон комнаты (обои) */
     background: linear-gradient(135deg, #2c1e16 0%, #4a3525 100%);
     box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
 }
@@ -123,12 +122,12 @@ body {
 /* Окно */
 .window {
     position: absolute;
-    top: 20px;
+    top: 40px;
     right: 40px;
     width: 180px;
     height: 240px;
-    background: #1a2a4a; /* Ночное небо */
-    border: 10px solid #5c4033; /* Деревянная рама */
+    background: #1a2a4a;
+    border: 10px solid #5c4033;
     border-radius: 4px;
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
     z-index: 1;
@@ -136,7 +135,6 @@ body {
 }
 .window-glass {
     width: 100%; height: 100%;
-    /* Ночной пейзаж за окном */
     background: linear-gradient(to bottom, #0f172a 0%, #1e293b 100%);
     box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
 }
@@ -147,7 +145,7 @@ body {
 .fireplace {
     position: absolute;
     bottom: 0;
-    left: 30px;
+    left: 40px;
     width: 200px;
     height: 280px;
     z-index: 1;
@@ -211,29 +209,27 @@ body {
 .gift-1 { left: 150px; animation: bob 2s infinite alternate; }
 .gift-2 { left: 190px; bottom: 10px; font-size: 2rem; animation: bob 2s infinite alternate-reverse; }
 
-/* Ёлка */
+/* SVG Ёлка */
 .tree {
     position: absolute;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 320px;
-    height: 450px;
+    width: 360px;
+    height: 520px;
     z-index: 3;
-    display: flex;
-    justify-content: center;
 }
-.tree-img {
+.tree-svg {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.7));
+    overflow: visible;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
 }
 
 /* Звезда */
 .star {
     position: absolute; 
-    top: 5px; /* Подстраиваем под макушку картинки */
+    top: -15px; 
     left: 50%; 
     transform: translateX(-50%);
     font-size: 3.5rem; 
@@ -252,7 +248,7 @@ body {
 /* Лоток с игрушками */
 .toys { 
     display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; 
-    max-width: 550px; margin-top: 10px;
+    max-width: 600px; margin-top: 10px; margin-left: auto; margin-right: auto;
 }
 .toy {
     width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -300,13 +296,13 @@ body {
     .container { padding: 24px 16px; }
     .toy { width: 48px; height: 48px; font-size: 1.5rem; }
     
-    .room-area { height: 400px; }
-    .tree { width: 240px; height: 340px; }
-    .star { font-size: 2.5rem; top: 0px; }
+    .room-area { height: 450px; }
+    .tree { width: 280px; height: 400px; }
+    .star { font-size: 2.5rem; top: -10px; }
     .toy.on-tree { width: 38px; height: 38px; font-size: 1.4rem; }
     
-    .window { width: 120px; height: 160px; top: 10px; right: 10px; }
-    .fireplace { width: 140px; height: 220px; left: 10px; }
+    .window { width: 120px; height: 160px; top: 20px; right: 20px; }
+    .fireplace { width: 140px; height: 220px; left: 20px; }
     .fireplace-body { height: 150px; }
     .fireplace-top { height: 15px; }
     .gift-1 { left: 100px; font-size: 2rem; }
