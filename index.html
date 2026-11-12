@@ -35,13 +35,55 @@
             <p class="hint">Перетащи 12 игрушек на ёлку (или кликни по ним)</p>
             
             <div class="tree-area">
-                <!-- Новая реалистичная ёлка -->
+                <!-- Новая красивая SVG-ёлка -->
                 <div class="tree" id="tree">
+                    
+                    <!-- Сама ёлка (SVG) -->
+                    <svg class="tree-svg" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <!-- Градиенты для объема -->
+                            <linearGradient id="treeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#0d4a1f" />
+                                <stop offset="30%" stop-color="#1b7333" />
+                                <stop offset="60%" stop-color="#28a745" />
+                                <stop offset="100%" stop-color="#15622a" />
+                            </linearGradient>
+                            <linearGradient id="trunkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#4a2c16" />
+                                <stop offset="50%" stop-color="#8b5a2b" />
+                                <stop offset="100%" stop-color="#4a2c16" />
+                            </linearGradient>
+                            <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                                <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+                            </filter>
+                        </defs>
+
+                        <!-- Ствол -->
+                        <rect x="180" y="520" width="40" height="80" fill="url(#trunkGrad)" rx="4" />
+                        
+                        <!-- Ярусы елки (создают пушистость) -->
+                        <g filter="url(#shadow)" fill="url(#treeGrad)">
+                            <!-- Нижний ярус -->
+                            <path d="M200,500 C100,500 20,480 20,420 C20,380 80,370 120,380 C100,350 140,330 200,340 C260,330 300,350 280,380 C320,370 380,380 380,420 C380,480 300,500 200,500 Z" />
+                            <!-- Средний ярус -->
+                            <path d="M200,380 C120,380 50,360 50,300 C50,260 100,250 130,260 C120,230 150,210 200,220 C250,210 280,230 270,260 C300,250 350,260 350,300 C350,360 280,380 200,380 Z" />
+                            <!-- Верхний ярус -->
+                            <path d="M200,260 C140,260 90,240 90,190 C90,160 120,150 140,160 C135,130 160,110 200,120 C240,110 265,130 260,160 C280,150 310,160 310,190 C310,240 260,260 200,260 Z" />
+                            <!-- Макушка -->
+                            <path d="M200,140 C160,140 130,120 130,90 C130,70 150,60 165,70 C165,50 180,40 200,40 C220,40 235,50 235,70 C250,60 270,70 270,90 C270,120 240,140 200,140 Z" />
+                        </g>
+                        
+                        <!-- Снег на ветках (для красоты) -->
+                        <g fill="#ffffff" opacity="0.6">
+                            <path d="M20,420 Q50,400 80,420 Q60,430 20,420 Z" />
+                            <path d="M320,420 Q350,400 380,420 Q340,430 320,420 Z" />
+                            <path d="M50,300 Q80,280 110,300 Q90,310 50,300 Z" />
+                            <path d="M290,300 Q320,280 350,300 Q310,310 290,300 Z" />
+                        </g>
+                    </svg>
+
+                    <!-- Звезда (поверх SVG) -->
                     <div class="star" id="star">⭐</div>
-                    <div class="tree-layer tree-layer-top"></div>
-                    <div class="tree-layer tree-layer-mid"></div>
-                    <div class="tree-layer tree-layer-bot"></div>
-                    <div class="tree-trunk"></div>
                 </div>
                 
                 <div class="toys" id="toysBox"></div>
