@@ -96,29 +96,10 @@ function selectAnswer(type) {
     }
 }
 
-// ============ ЁЛКА И УМНОЕ РАСПРЕДЕЛЕНИЕ ============
+// ============ ЁЛКА И СВОБОДНОЕ РАСПРЕДЕЛЕНИЕ ============
 const toyEmojis = ['🎁', '🔔', '🍬', '⛄', '❤️', '🌟', '🍭', '🧸', '🎈', '🪅', '📦', '🎊', '🍏', '🍎', '🔮', '🦌'];
 let placedToys = 0;
-const TOTAL_TOYS = 12; // Наряжаем 12 игрушек
-
-// Заранее подготовленные координаты для идеального распределения
-// Мы делим ёлку на 3 яруса по высоте и распределяем игрушки по ширине веток
-const treePositions = [
-    // Верхний ярус (узкий)
-    { top: '18%', left: '50%' }, 
-    { top: '24%', left: '42%' }, { top: '24%', left: '58%' },
-    { top: '30%', left: '50%' },
-    
-    // Средний ярус
-    { top: '38%', left: '32%' }, { top: '38%', left: '68%' },
-    { top: '46%', left: '40%' }, { top: '46%', left: '60%' },
-    { top: '52%', left: '50%' },
-    
-    // Нижний ярус (широкий)
-    { top: '62%', left: '25%' }, { top: '62%', left: '75%' },
-    { top: '70%', left: '35%' }, { top: '70%', left: '65%' },
-    { top: '76%', left: '50%' }
-];
+const TOTAL_TOYS = 12; 
 
 function initTreeGame() {
     placedToys = 0;
@@ -127,14 +108,10 @@ function initTreeGame() {
 
     // Очищаем старые
     document.querySelectorAll('.toy.on-tree').forEach(t => t.remove());
-    
-    // Перемешиваем позиции, чтобы каждый раз ёлка выглядела по-новому
-    const availablePositions = [...treePositions].sort(() => Math.random() - 0.5);
 
     const toysBox = document.getElementById('toysBox');
     toysBox.innerHTML = '';
 
-    // Выбираем 14 случайных игрушек для лотка (чтобы был выбор)
     const shuffled = [...toyEmojis].sort(() => Math.random() - 0.5).slice(0, 14);
 
     shuffled.forEach(emoji => {
@@ -143,47 +120,77 @@ function initTreeGame() {
         toy.textContent = emoji;
         toy.draggable = true;
         toy.addEventListener('dragstart', handleDragStart);
-        toy.addEventListener('click', () => placeToy(toy, availablePositions));
+        // Клик теперь тоже работает, но ставит игрушку в случайное место
+        toy.addEventListener('click', () => placeToyRandom(toy)); 
         toysBox.appendChild(toy);
     });
 
     const tree = document.getElementById('tree');
     tree.addEventListener('dragover', e => e.preventDefault());
-    
-    // Обработчик drop передает доступные позиции
-    tree.addEventListener('drop', (e) => handleDrop(e, availablePositions));
+    tree.addEventListener('drop', handleDrop);
 }
 
 let draggedToy = null;
-function handleDragStart(e) { draggedToy = e.target; }
-
-function handleDrop(e, availablePositions) {
-    e.preventDefault();
-    if (draggedToy && !draggedToy.classList.contains('used')) {
-        placeToy(draggedToy, availablePositions);
-        draggedToy = null;
-    }
+function handleDragStart(e) { 
+    draggedToy = e.target; 
+    // Чтобы при перетаскивании не срабатывал клик
+    setTimeout(() => e.target.style.opacity = '0.5', 0);
 }
 
-function placeToy(toy, availablePositions) {
-    if (toy.classList.contains('used') || placedToys >= TOTAL_TOYS) return;
-    
-    // Берем позицию из массива по индексу
-    const pos = availablePositions[placedToys];
-    if (!pos) return; // На всякий случай
+function handleDrop(e) {
+    e.preventDefault();
+    if (!draggedToy || draggedToy.classList.contains('used')) return;
 
-    toy.classList.add('used');
+    const tree = document.getElementById('tree');
+    const treeRect = tree.getBoundingClientRect();
+    
+    // Вычисляем координаты относительно самой ёлки
+    let x = e.clientX - treeRect.left;
+    let y = e.clientY - treeRect.top;
+
+    // Проверка, что игрушку бросили именно на ёлку (в пределах её прямоугольника)
+    // и не слишком далеко в стороны
+    if (x < 10 || x > treeRect.width - 10 || y < 20 || y > treeRect.height - 20) {
+        // Если бросили мимо, возвращаем игрушку в лоток
+        draggedToy.style.opacity = '1';
+        draggedToy = null;
+        return;
+    }
+
+    createPlacedToy(draggedToy, x, y);
+    draggedToy.style.opacity = '1';
+    draggedToy = null;
+}
+
+// Функция для кликов (если нет мыши, ставим в случайное место на ёлке)
+function placeToyRandom(toy) {
+    if (toy.classList.contains('used')) return;
+    const tree = document.getElementById('tree');
+    const treeRect = tree.getBoundingClientRect();
+    
+    // Случайные координаты внутри ёлки
+    const x = Math.random() * (treeRect.width - 80) + 40;
+    const y = Math.random() * (treeRect.height - 120) + 60;
+    
+    createPlacedToy(toy, x, y);
+}
+
+// Общая функция создания игрушки на ёлке
+function createPlacedToy(toyElement, x, y) {
+    if (placedToys >= TOTAL_TOYS) return;
+
+    toyElement.classList.add('used');
 
     const placed = document.createElement('div');
     placed.className = 'toy on-tree';
-    placed.textContent = toy.textContent;
+    placed.textContent = toyElement.textContent;
     
-    // Позиционируем
-    placed.style.top = pos.top;
-    placed.style.left = pos.left;
+    // Задаем точные координаты
+    placed.style.left = `${x}px`;
+    placed.style.top = `${y}px`;
     
-    // Случайный легкий поворот для естественности
-    placed.style.rotate = `${Math.random() * 30 - 15}deg`;
+    // Случайный поворот
+    placed.style.rotate = `${Math.random() * 40 - 20}deg`;
 
     document.getElementById('tree').appendChild(placed);
 
