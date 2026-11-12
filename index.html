@@ -9,9 +9,7 @@
 <body>
     <canvas id="snow"></canvas>
     
-    <!-- Кнопка музыки -->
     <button id="musicBtn" class="music-btn" title="Включить/Выключить музыку">🔇</button>
-    <!-- Аудио-тег (мы загрузим туда ссылку) -->
     <audio id="bgMusic" loop>
         <source src="https://cdn.pixabay.com/download/audio/2022/11/17/audio_07b9278208.mp3" type="audio/mpeg">
     </audio>
@@ -20,7 +18,7 @@
         <!-- ЭКРАН 1: Приветствие -->
         <section class="screen active" id="screen-start">
             <h1 class="title">🎄 Наряди ёлку желаний 🎄</h1>
-            <p class="subtitle">Ответь на 5 вопросов, наряди ёлку — и получи своё уникальное новогоднее пожелание!</p>
+            <p class="subtitle">Ответь на 5 вопросов, наряди пушистую ёлку — и получи своё уникальное новогоднее пожелание!</p>
             <button class="btn" onclick="startQuiz()">Начать ✨</button>
         </section>
 
@@ -33,17 +31,23 @@
 
         <!-- ЭКРАН 3: Ёлка -->
         <section class="screen" id="screen-tree">
-            <h2 class="section-title">Укрась ёлку! 🎁</h2>
-            <p class="hint">Перетащи 8 игрушек на ёлку (или кликни по ним)</p>
+            <h2 class="section-title">Наряди ёлку! 🎁</h2>
+            <p class="hint">Перетащи 12 игрушек на ёлку (или кликни по ним)</p>
+            
             <div class="tree-area">
+                <!-- Новая реалистичная ёлка -->
                 <div class="tree" id="tree">
                     <div class="star" id="star">⭐</div>
-                    <div class="tree-body"></div>
+                    <div class="tree-layer tree-layer-top"></div>
+                    <div class="tree-layer tree-layer-mid"></div>
+                    <div class="tree-layer tree-layer-bot"></div>
                     <div class="tree-trunk"></div>
                 </div>
+                
                 <div class="toys" id="toysBox"></div>
             </div>
-            <p class="counter">Украшений: <span id="toyCount">0</span> / 8</p>
+            
+            <p class="counter">Украшений: <span id="toyCount">0</span> / 12</p>
             <button class="btn hidden" id="finishBtn" onclick="showResult()">Получить пожелание 🎁</button>
         </section>
 
@@ -58,7 +62,6 @@
                 <p class="card-sign">— Твой новогодний эльф 🧝</p>
             </div>
             
-            <!-- Счетчик (имитация бэкенда через API) -->
             <div class="global-counter">
                 🏆 Эту ёлку уже нарядили: <span id="globalCount">...</span> человек
             </div>
