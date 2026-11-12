@@ -8,7 +8,7 @@ musicBtn.addEventListener('click', () => {
         bgMusic.pause();
         musicBtn.textContent = '🔇';
     } else {
-        bgMusic.play().catch(e => console.log("Браузер блокирует автоплей, нужен клик"));
+        bgMusic.play().catch(e => console.log("Браузер блокирует автоплей"));
         musicBtn.textContent = '🔊';
     }
     isMusicPlaying = !isMusicPlaying;
@@ -54,77 +54,26 @@ function drawSnow() {
 }
 drawSnow();
 
-// ============ ТЕСТ (5 ВОПРОСОВ) ============
+// ============ ТЕСТ ============
 const questions = [
-    {
-        q: 'Как ты встречаешь Новый год?',
-        a: [
-            { text: '🏠 Дома с семьёй у ёлки', type: 'home' },
-            { text: '🎉 На шумной вечеринке с друзьями', type: 'party' },
-            { text: '🌲 В горах / на природе', type: 'nature' }
-        ]
-    },
-    {
-        q: 'Твой главный новогодний ритуал?',
-        a: [
-            { text: '📝 Загадать желание под бой курантов', type: 'dream' },
-            { text: '🍽️ Приготовить праздничный стол', type: 'food' },
-            { text: '🎁 Выбирать подарки близким', type: 'gift' }
-        ]
-    },
-    {
-        q: 'Какое чудо ты ждёшь в новом году?',
-        a: [
-            { text: '❤️ Встретить любовь', type: 'love' },
-            { text: '💼 Успех в делах', type: 'success' },
-            { text: '🌟 Исполнение заветной мечты', type: 'wish' }
-        ]
-    },
-    {
-        q: 'Твой любимый новогодний напиток?',
-        a: [
-            { text: '🍾 Шампанское / Игристое', type: 'sparkling' },
-            { text: '🍵 Горячий чай с травами', type: 'tea' },
-            { text: '🍫 Какао с маршмеллоу', type: 'cocoa' }
-        ]
-    },
-    {
-        q: 'Что для тебя Новый год в первую очередь?',
-        a: [
-            { text: '🎆 Волшебство и сказка', type: 'magic' },
-            { text: '🤝 Время с близкими', type: 'family' },
-            { text: '🚀 Новые планы и цели', type: 'future' }
-        ]
-    }
+    { q: 'Как ты встречаешь Новый год?', a: [{ text: '🏠 Дома с семьёй у ёлки', type: 'home' }, { text: '🎉 На шумной вечеринке', type: 'party' }, { text: '🌲 В горах / на природе', type: 'nature' }] },
+    { q: 'Твой главный новогодний ритуал?', a: [{ text: '📝 Загадать желание', type: 'dream' }, { text: '🍽️ Приготовить стол', type: 'food' }, { text: '🎁 Выбирать подарки', type: 'gift' }] },
+    { q: 'Какое чудо ты ждёшь?', a: [{ text: '❤️ Встретить любовь', type: 'love' }, { text: '💼 Успех в делах', type: 'success' }, { text: '🌟 Исполнение мечты', type: 'wish' }] },
+    { q: 'Твой любимый новогодний напиток?', a: [{ text: '🍾 Шампанское', type: 'sparkling' }, { text: '🍵 Горячий чай', type: 'tea' }, { text: '🍫 Какао с маршмеллоу', type: 'cocoa' }] },
+    { q: 'Что для тебя Новый год?', a: [{ text: '🎆 Волшебство и сказка', type: 'magic' }, { text: '🤝 Время с близкими', type: 'family' }, { text: '🚀 Новые планы', type: 'future' }] }
 ];
 
 let currentQuestion = 0;
 let userAnswers = [];
+const screens = { start: document.getElementById('screen-start'), quiz: document.getElementById('screen-quiz'), tree: document.getElementById('screen-tree'), result: document.getElementById('screen-result') };
 
-const screens = {
-    start: document.getElementById('screen-start'),
-    quiz: document.getElementById('screen-quiz'),
-    tree: document.getElementById('screen-tree'),
-    result: document.getElementById('screen-result')
-};
-
-function showScreen(name) {
-    Object.values(screens).forEach(s => s.classList.remove('active'));
-    screens[name].classList.add('active');
-}
-
-function startQuiz() {
-    currentQuestion = 0;
-    userAnswers = [];
-    showScreen('quiz');
-    renderQuestion();
-}
+function showScreen(name) { Object.values(screens).forEach(s => s.classList.remove('active')); screens[name].classList.add('active'); }
+function startQuiz() { currentQuestion = 0; userAnswers = []; showScreen('quiz'); renderQuestion(); }
 
 function renderQuestion() {
     const q = questions[currentQuestion];
     document.getElementById('questionText').textContent = q.q;
     document.getElementById('progressBar').style.width = ((currentQuestion) / questions.length * 100) + '%';
-
     const box = document.getElementById('answersBox');
     box.innerHTML = '';
     q.a.forEach(ans => {
@@ -143,39 +92,50 @@ function selectAnswer(type) {
         renderQuestion();
     } else {
         document.getElementById('progressBar').style.width = '100%';
-        setTimeout(() => {
-            showScreen('tree');
-            initTreeGame();
-        }, 300);
+        setTimeout(() => { showScreen('tree'); initTreeGame(); }, 300);
     }
 }
 
-// ============ ЁЛКА (БОЛЬШЕ ИГРУШЕК) ============
-const toyEmojis = ['🎁', '🔔', '🍬', '⛄', '❤️', '🌟', '🍭', '🧸', '🎈', '🪅', '📦', '🎊'];
+// ============ ЁЛКА И УМНОЕ РАСПРЕДЕЛЕНИЕ ============
+const toyEmojis = ['🎁', '🔔', '🍬', '⛄', '❤️', '🌟', '🍭', '🧸', '🎈', '🪅', '📦', '🎊', '🍏', '🍎', '🔮', '🦌'];
 let placedToys = 0;
-const TOTAL_TOYS = 8; // Увеличили количество
-const treePositions = [
-    { top: '38%', left: '50%' }, { top: '52%', left: '32%' }, { top: '52%', left: '68%' },
-    { top: '66%', left: '40%' }, { top: '66%', left: '60%' }, { top: '78%', left: '50%' },
-    { top: '45%', left: '42%' }, { top: '45%', left: '58%' }, { top: '35%', left: '62%' },
-    { top: '72%', left: '30%' }, { top: '72%', left: '70%' }, { top: '60%', left: '50%' }
-];
+const TOTAL_TOYS = 12; // Наряжаем 12 игрушек
 
-let availablePositions = [];
+// Заранее подготовленные координаты для идеального распределения
+// Мы делим ёлку на 3 яруса по высоте и распределяем игрушки по ширине веток
+const treePositions = [
+    // Верхний ярус (узкий)
+    { top: '18%', left: '50%' }, 
+    { top: '24%', left: '42%' }, { top: '24%', left: '58%' },
+    { top: '30%', left: '50%' },
+    
+    // Средний ярус
+    { top: '38%', left: '32%' }, { top: '38%', left: '68%' },
+    { top: '46%', left: '40%' }, { top: '46%', left: '60%' },
+    { top: '52%', left: '50%' },
+    
+    // Нижний ярус (широкий)
+    { top: '62%', left: '25%' }, { top: '62%', left: '75%' },
+    { top: '70%', left: '35%' }, { top: '70%', left: '65%' },
+    { top: '76%', left: '50%' }
+];
 
 function initTreeGame() {
     placedToys = 0;
     document.getElementById('toyCount').textContent = '0';
     document.getElementById('finishBtn').classList.add('hidden');
 
+    // Очищаем старые
     document.querySelectorAll('.toy.on-tree').forEach(t => t.remove());
-    availablePositions = [...treePositions].sort(() => Math.random() - 0.5);
+    
+    // Перемешиваем позиции, чтобы каждый раз ёлка выглядела по-новому
+    const availablePositions = [...treePositions].sort(() => Math.random() - 0.5);
 
     const toysBox = document.getElementById('toysBox');
     toysBox.innerHTML = '';
 
-    // Выбираем 10 случайных игрушек из набора (чтобы был выбор)
-    const shuffled = [...toyEmojis].sort(() => Math.random() - 0.5).slice(0, 10);
+    // Выбираем 14 случайных игрушек для лотка (чтобы был выбор)
+    const shuffled = [...toyEmojis].sort(() => Math.random() - 0.5).slice(0, 14);
 
     shuffled.forEach(emoji => {
         const toy = document.createElement('div');
@@ -183,38 +143,46 @@ function initTreeGame() {
         toy.textContent = emoji;
         toy.draggable = true;
         toy.addEventListener('dragstart', handleDragStart);
-        toy.addEventListener('click', () => placeToy(toy));
+        toy.addEventListener('click', () => placeToy(toy, availablePositions));
         toysBox.appendChild(toy);
     });
 
     const tree = document.getElementById('tree');
     tree.addEventListener('dragover', e => e.preventDefault());
-    tree.addEventListener('drop', handleDrop);
+    
+    // Обработчик drop передает доступные позиции
+    tree.addEventListener('drop', (e) => handleDrop(e, availablePositions));
 }
 
 let draggedToy = null;
-
 function handleDragStart(e) { draggedToy = e.target; }
 
-function handleDrop(e) {
+function handleDrop(e, availablePositions) {
     e.preventDefault();
     if (draggedToy && !draggedToy.classList.contains('used')) {
-        placeToy(draggedToy);
+        placeToy(draggedToy, availablePositions);
         draggedToy = null;
     }
 }
 
-function placeToy(toy) {
+function placeToy(toy, availablePositions) {
     if (toy.classList.contains('used') || placedToys >= TOTAL_TOYS) return;
+    
+    // Берем позицию из массива по индексу
+    const pos = availablePositions[placedToys];
+    if (!pos) return; // На всякий случай
+
     toy.classList.add('used');
 
-    const pos = availablePositions[placedToys];
     const placed = document.createElement('div');
     placed.className = 'toy on-tree';
     placed.textContent = toy.textContent;
+    
+    // Позиционируем
     placed.style.top = pos.top;
     placed.style.left = pos.left;
-    placed.style.transform = 'translate(-50%, -50%)';
+    
+    // Случайный легкий поворот для естественности
     placed.style.rotate = `${Math.random() * 30 - 15}deg`;
 
     document.getElementById('tree').appendChild(placed);
@@ -227,7 +195,7 @@ function placeToy(toy) {
     }
 }
 
-// ============ СЛОЖНАЯ ЛОГИКА РЕЗУЛЬТАТА ============
+// ============ ЛОГИКА РЕЗУЛЬТАТА ============
 const wishes = {
     home: { t: 'Тепло домашнего очага', e: '🏠', p: 'Пусть в твоем доме всегда будет уют и тихие радости.' },
     party: { t: 'Год ярких событий', e: '🎉', p: 'Пусть жизнь будет полна встреч, смеха и неожиданных приключений!' },
@@ -247,9 +215,9 @@ const wishes = {
 };
 
 function showResult() {
-    const mainType = userAnswers[0] || 'wish';      // Из первого вопроса
-    const subType = userAnswers[2] || 'magic';      // Из третьего вопроса (чудо)
-    const vibeType = userAnswers[3] || 'cocoa';     // Из четвертого (напиток)
+    const mainType = userAnswers[0] || 'wish';
+    const subType = userAnswers[2] || 'magic';
+    const vibeType = userAnswers[3] || 'cocoa';
 
     const main = wishes[mainType];
     const sub = wishes[subType];
@@ -257,51 +225,30 @@ function showResult() {
 
     document.getElementById('resultEmoji').textContent = main.e;
     document.getElementById('resultTitle').textContent = main.t;
-    
-    // Собираем сложный текст из 3-х частей
-    document.getElementById('resultText').innerHTML = 
-        `${main.p} <br><br> А еще ${sub.p.toLowerCase()} <br><br> ${vibe.p}`;
+    document.getElementById('resultText').innerHTML = `${main.p} <br><br> А еще ${sub.p.toLowerCase()} <br><br> ${vibe.p}`;
 
-    // Бонус от последнего вопроса
     const finalVibe = wishes[userAnswers[4] || 'magic'];
     document.getElementById('resultBonus').textContent = `И помни: ${finalVibe.p.toLowerCase()}`;
 
-    // Запускаем счетчик
     updateGlobalCounter();
-    
     showScreen('result');
 }
 
-// ============ ИМИТАЦИЯ БЭКЕНДА (СЧЕТЧИК) ============
+// ============ ИМИТАЦИЯ СЧЕТЧИКА ============
 async function updateGlobalCounter() {
     const countElement = document.getElementById('globalCount');
     try {
-        // Используем бесплатный API для подсчета посещений
-        // При первом заходе он вернет число, при последующих будет его увеличивать
-        const response = await fetch('https://api.api-ninjas.com/v1/counter?id=ny_tree_v1&hit=true', {
-             headers: { 'X-Api-Key': 'YOUR_API_KEY' } // Если без ключа не сработает, используем fallback
-        });
-        
-        // Fallback: если API не сработал, используем локальное хранилище (имитация)
-        if (!response.ok) throw new Error('API Error');
-        const data = await response.json();
-        countElement.textContent = data.value + 1240; // Прибавляем базу для солидности
-        
-    } catch (e) {
-        // Если API недоступен, берем число из localStorage и увеличиваем его (работает на клиенте)
         let localCount = localStorage.getItem('ny_tree_count');
         if (!localCount) localCount = Math.floor(Math.random() * 500) + 1200;
         localCount = parseInt(localCount) + 1;
         localStorage.setItem('ny_tree_count', localCount);
         countElement.textContent = localCount;
+    } catch (e) {
+        countElement.textContent = "1300+";
     }
 }
 
-function restart() {
-    currentQuestion = 0;
-    userAnswers = [];
-    showScreen('start');
-}
+function restart() { currentQuestion = 0; userAnswers = []; showScreen('start'); }
 
 function shareResult() {
     const title = document.getElementById('resultTitle').innerText;
@@ -311,8 +258,6 @@ function shareResult() {
     if (navigator.share) {
         navigator.share({ title: 'Моё новогоднее пожелание', text: shareText }).catch(() => {});
     } else {
-        navigator.clipboard.writeText(shareText)
-            .then(() => alert('✨ Пожелание скопировано! Отправь его друзьям.'))
-            .catch(() => alert('Не удалось скопировать. Выдели текст вручную 😊'));
+        navigator.clipboard.writeText(shareText).then(() => alert('✨ Пожелание скопировано!')).catch(() => alert('Не удалось скопировать 😊'));
     }
 }
