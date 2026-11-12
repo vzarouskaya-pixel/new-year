@@ -106,7 +106,6 @@ function initTreeGame() {
     document.getElementById('toyCount').textContent = '0';
     document.getElementById('finishBtn').classList.add('hidden');
 
-    // Очищаем старые
     document.querySelectorAll('.toy.on-tree').forEach(t => t.remove());
 
     const toysBox = document.getElementById('toysBox');
@@ -120,7 +119,6 @@ function initTreeGame() {
         toy.textContent = emoji;
         toy.draggable = true;
         toy.addEventListener('dragstart', handleDragStart);
-        // Клик теперь тоже работает, но ставит игрушку в случайное место
         toy.addEventListener('click', () => placeToyRandom(toy)); 
         toysBox.appendChild(toy);
     });
@@ -133,7 +131,6 @@ function initTreeGame() {
 let draggedToy = null;
 function handleDragStart(e) { 
     draggedToy = e.target; 
-    // Чтобы при перетаскивании не срабатывал клик
     setTimeout(() => e.target.style.opacity = '0.5', 0);
 }
 
@@ -144,14 +141,12 @@ function handleDrop(e) {
     const tree = document.getElementById('tree');
     const treeRect = tree.getBoundingClientRect();
     
-    // Вычисляем координаты относительно самой ёлки
     let x = e.clientX - treeRect.left;
     let y = e.clientY - treeRect.top;
 
-    // Проверка, что игрушку бросили именно на ёлку (в пределах её прямоугольника)
-    // и не слишком далеко в стороны
-    if (x < 10 || x > treeRect.width - 10 || y < 20 || y > treeRect.height - 20) {
-        // Если бросили мимо, возвращаем игрушку в лоток
+    // Проверка: если бросили мимо (слишком далеко в стороны или ниже ствола)
+    // Зона ограничена примерными границами веток
+    if (x < 10 || x > treeRect.width - 10 || y < 30 || y > treeRect.height - 20) {
         draggedToy.style.opacity = '1';
         draggedToy = null;
         return;
@@ -162,20 +157,18 @@ function handleDrop(e) {
     draggedToy = null;
 }
 
-// Функция для кликов (если нет мыши, ставим в случайное место на ёлке)
 function placeToyRandom(toy) {
     if (toy.classList.contains('used')) return;
     const tree = document.getElementById('tree');
     const treeRect = tree.getBoundingClientRect();
     
-    // Случайные координаты внутри ёлки
-    const x = Math.random() * (treeRect.width - 80) + 40;
-    const y = Math.random() * (treeRect.height - 120) + 60;
+    // Случайные координаты, ближе к центру ёлки (чтобы не попадали на пустые края)
+    const x = (Math.random() * 0.6 + 0.2) * treeRect.width; 
+    const y = (Math.random() * 0.6 + 0.15) * treeRect.height; 
     
     createPlacedToy(toy, x, y);
 }
 
-// Общая функция создания игрушки на ёлке
 function createPlacedToy(toyElement, x, y) {
     if (placedToys >= TOTAL_TOYS) return;
 
@@ -184,12 +177,8 @@ function createPlacedToy(toyElement, x, y) {
     const placed = document.createElement('div');
     placed.className = 'toy on-tree';
     placed.textContent = toyElement.textContent;
-    
-    // Задаем точные координаты
     placed.style.left = `${x}px`;
     placed.style.top = `${y}px`;
-    
-    // Случайный поворот
     placed.style.rotate = `${Math.random() * 40 - 20}deg`;
 
     document.getElementById('tree').appendChild(placed);
@@ -231,40 +220,4 @@ function showResult() {
     const vibe = wishes[vibeType];
 
     document.getElementById('resultEmoji').textContent = main.e;
-    document.getElementById('resultTitle').textContent = main.t;
-    document.getElementById('resultText').innerHTML = `${main.p} <br><br> А еще ${sub.p.toLowerCase()} <br><br> ${vibe.p}`;
-
-    const finalVibe = wishes[userAnswers[4] || 'magic'];
-    document.getElementById('resultBonus').textContent = `И помни: ${finalVibe.p.toLowerCase()}`;
-
-    updateGlobalCounter();
-    showScreen('result');
-}
-
-// ============ ИМИТАЦИЯ СЧЕТЧИКА ============
-async function updateGlobalCounter() {
-    const countElement = document.getElementById('globalCount');
-    try {
-        let localCount = localStorage.getItem('ny_tree_count');
-        if (!localCount) localCount = Math.floor(Math.random() * 500) + 1200;
-        localCount = parseInt(localCount) + 1;
-        localStorage.setItem('ny_tree_count', localCount);
-        countElement.textContent = localCount;
-    } catch (e) {
-        countElement.textContent = "1300+";
-    }
-}
-
-function restart() { currentQuestion = 0; userAnswers = []; showScreen('start'); }
-
-function shareResult() {
-    const title = document.getElementById('resultTitle').innerText;
-    const text = document.getElementById('resultText').innerText;
-    const shareText = `🎄 Моё новогоднее пожелание: ${title}. ${text}`;
-
-    if (navigator.share) {
-        navigator.share({ title: 'Моё новогоднее пожелание', text: shareText }).catch(() => {});
-    } else {
-        navigator.clipboard.writeText(shareText).then(() => alert('✨ Пожелание скопировано!')).catch(() => alert('Не удалось скопировать 😊'));
-    }
-}
+    document.getElementById('resultTitle').textContent =
