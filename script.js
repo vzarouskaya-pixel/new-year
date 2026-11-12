@@ -144,7 +144,7 @@ function handleDrop(e) {
     let x = e.clientX - treeRect.left;
     let y = e.clientY - treeRect.top;
 
-    // Проверка границ (чтобы игрушки не висели в воздухе рядом с елкой)
+    // Проверка границ, чтобы игрушки не висели в воздухе
     if (x < 20 || x > treeRect.width - 20 || y < 30 || y > treeRect.height - 20) {
         draggedToy.style.opacity = '1';
         draggedToy = null;
