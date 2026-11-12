@@ -8,12 +8,19 @@
 </head>
 <body>
     <canvas id="snow"></canvas>
+    
+    <!-- Кнопка музыки -->
+    <button id="musicBtn" class="music-btn" title="Включить/Выключить музыку">🔇</button>
+    <!-- Аудио-тег (мы загрузим туда ссылку) -->
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/11/17/audio_07b9278208.mp3" type="audio/mpeg">
+    </audio>
 
     <main class="container">
         <!-- ЭКРАН 1: Приветствие -->
         <section class="screen active" id="screen-start">
             <h1 class="title">🎄 Наряди ёлку желаний 🎄</h1>
-            <p class="subtitle">Ответь на 3 вопроса, наряди ёлку — и получи своё новогоднее пожелание!</p>
+            <p class="subtitle">Ответь на 5 вопросов, наряди ёлку — и получи своё уникальное новогоднее пожелание!</p>
             <button class="btn" onclick="startQuiz()">Начать ✨</button>
         </section>
 
@@ -27,7 +34,7 @@
         <!-- ЭКРАН 3: Ёлка -->
         <section class="screen" id="screen-tree">
             <h2 class="section-title">Укрась ёлку! 🎁</h2>
-            <p class="hint">Перетащи 5 игрушек на ёлку (или кликни по ним)</p>
+            <p class="hint">Перетащи 8 игрушек на ёлку (или кликни по ним)</p>
             <div class="tree-area">
                 <div class="tree" id="tree">
                     <div class="star" id="star">⭐</div>
@@ -36,7 +43,7 @@
                 </div>
                 <div class="toys" id="toysBox"></div>
             </div>
-            <p class="counter">Украшений: <span id="toyCount">0</span> / 5</p>
+            <p class="counter">Украшений: <span id="toyCount">0</span> / 8</p>
             <button class="btn hidden" id="finishBtn" onclick="showResult()">Получить пожелание 🎁</button>
         </section>
 
@@ -45,9 +52,17 @@
             <div class="card" id="resultCard">
                 <h2 class="card-title">🎉 С Новым годом! 🎉</h2>
                 <div class="card-emoji" id="resultEmoji">🎄</div>
+                <h3 id="resultTitle" class="result-title" style="color: #ffd86b; margin-bottom: 10px;"></h3>
                 <p class="card-text" id="resultText"></p>
+                <p class="card-text" id="resultBonus" style="font-style: italic; color: #a8c4dd; margin-top: 15px;"></p>
                 <p class="card-sign">— Твой новогодний эльф 🧝</p>
             </div>
+            
+            <!-- Счетчик (имитация бэкенда через API) -->
+            <div class="global-counter">
+                🏆 Эту ёлку уже нарядили: <span id="globalCount">...</span> человек
+            </div>
+
             <div class="actions">
                 <button class="btn btn-secondary" onclick="restart()">🔄 Заново</button>
                 <button class="btn" onclick="shareResult()">📤 Поделиться</button>
