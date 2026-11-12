@@ -221,3 +221,50 @@ function showResult() {
 
     document.getElementById('resultEmoji').textContent = main.e;
     document.getElementById('resultTitle').textContent =
+    const main = wishes[mainType];
+    const sub = wishes[subType];
+    const vibe = wishes[vibeType];
+
+    document.getElementById('resultEmoji').textContent = main.e;
+    document.getElementById('resultTitle').textContent = main.t;
+    document.getElementById('resultText').innerHTML = `${main.p} <br><br> А еще ${sub.p.toLowerCase()} <br><br> ${vibe.p}`;
+
+    const finalVibe = wishes[userAnswers[4] || 'magic'];
+    document.getElementById('resultBonus').textContent = `И помни: ${finalVibe.p.toLowerCase()}`;
+
+    updateGlobalCounter();
+    showScreen('result');
+}
+
+// ============ ИМИТАЦИЯ СЧЕТЧИКА ============
+async function updateGlobalCounter() {
+    const countElement = document.getElementById('globalCount');
+    try {
+        let localCount = localStorage.getItem('ny_tree_count');
+        if (!localCount) localCount = Math.floor(Math.random() * 500) + 1200;
+        localCount = parseInt(localCount) + 1;
+        localStorage.setItem('ny_tree_count', localCount);
+        countElement.textContent = localCount;
+    } catch (e) {
+        countElement.textContent = "1300+";
+    }
+}
+
+// ============ КНОПКИ ============
+function restart() { 
+    currentQuestion = 0; 
+    userAnswers = []; 
+    showScreen('start'); 
+}
+
+function shareResult() {
+    const title = document.getElementById('resultTitle').innerText;
+    const text = document.getElementById('resultText').innerText;
+    const shareText = `🎄 Моё новогоднее пожелание: ${title}. ${text}`;
+
+    if (navigator.share) {
+        navigator.share({ title: 'Моё новогоднее пожелание', text: shareText }).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(shareText).then(() => alert('✨ Пожелание скопировано!')).catch(() => alert('Не удалось скопировать 😊'));
+    }
+}
