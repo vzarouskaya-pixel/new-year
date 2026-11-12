@@ -7,7 +7,7 @@
 body {
     min-height: 100vh;
     font-family: 'Segoe UI', 'Comic Sans MS', sans-serif;
-    background: linear-gradient(180deg, #0b1e3d 0%, #1a3a6b 50%, #2c5f8a 100%);
+    background: #0b1e3d;
     color: #fff;
     overflow-x: hidden;
     display: flex;
@@ -23,7 +23,7 @@ body {
     width: 100%; 
     height: 100%; 
     pointer-events: none; 
-    z-index: 1; 
+    z-index: 100; /* Снег поверх всего */
 }
 
 /* Кнопка музыки */
@@ -39,7 +39,7 @@ body {
     color: white; 
     font-size: 1.5rem; 
     cursor: pointer; 
-    z-index: 10;
+    z-index: 101;
     transition: all 0.3s; 
     backdrop-filter: blur(5px);
     display: flex;
@@ -65,174 +65,175 @@ body {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
-.screen { 
-    display: none; 
-    animation: fadeIn 0.5s ease; 
-}
-
-.screen.active { 
-    display: block; 
-}
-
-@keyframes fadeIn { 
-    from { opacity: 0; transform: translateY(15px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
+.screen { display: none; animation: fadeIn 0.5s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
 .title {
     font-size: clamp(1.6rem, 5vw, 2.4rem); 
     text-align: center;
     background: linear-gradient(90deg, #ffd86b, #ff6b9d, #6bffb8, #ffd86b);
-    background-size: 300%; 
-    -webkit-background-clip: text; 
-    background-clip: text;
-    -webkit-text-fill-color: transparent; 
-    animation: shimmer 4s linear infinite; 
-    margin-bottom: 16px;
+    background-size: 300%; -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; margin-bottom: 16px;
 }
+@keyframes shimmer { to { background-position: 300%; } }
 
-@keyframes shimmer { 
-    to { background-position: 300%; } 
-}
-
-.subtitle { 
-    text-align: center; 
-    color: #cfe2f3; 
-    margin-bottom: 28px; 
-    line-height: 1.5; 
-}
-
-.section-title { 
-    text-align: center; 
-    font-size: 1.4rem; 
-    margin-bottom: 8px; 
-    color: #ffd86b; 
-}
-
-.hint { 
-    text-align: center; 
-    color: #a8c4dd; 
-    font-size: 0.9rem; 
-    margin-bottom: 20px; 
-}
+.subtitle { text-align: center; color: #cfe2f3; margin-bottom: 28px; line-height: 1.5; }
+.section-title { text-align: center; font-size: 1.4rem; margin-bottom: 8px; color: #ffd86b; }
+.hint { text-align: center; color: #a8c4dd; font-size: 0.9rem; margin-bottom: 20px; }
 
 .btn {
-    display: block; 
-    margin: 0 auto; 
-    padding: 14px 36px; 
-    font-size: 1.1rem; 
-    font-weight: 600;
-    border: none; 
-    border-radius: 50px; 
-    cursor: pointer;
-    background: linear-gradient(135deg, #ff6b9d, #ffd86b); 
-    color: #1a1a2e;
-    transition: transform 0.2s, box-shadow 0.2s; 
-    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+    display: block; margin: 0 auto; padding: 14px 36px; font-size: 1.1rem; font-weight: 600;
+    border: none; border-radius: 50px; cursor: pointer;
+    background: linear-gradient(135deg, #ff6b9d, #ffd86b); color: #1a1a2e;
+    transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
 }
-
-.btn:hover { 
-    transform: translateY(-2px) scale(1.03); 
-    box-shadow: 0 12px 28px rgba(255, 107, 157, 0.6); 
-}
-
-.btn:active { 
-    transform: scale(0.98); 
-}
-
-.btn-secondary { 
-    background: rgba(255, 255, 255, 0.15); 
-    color: #fff; 
-    box-shadow: none; 
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.25);
-}
-
-.hidden { 
-    display: none !important; 
-}
+.btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 12px 28px rgba(255, 107, 157, 0.6); }
+.btn:active { transform: scale(0.98); }
+.btn-secondary { background: rgba(255, 255, 255, 0.15); color: #fff; box-shadow: none; }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.25); }
+.hidden { display: none !important; }
 
 /* Тест */
-.progress { 
-    height: 8px; 
-    background: rgba(255, 255, 255, 0.15); 
-    border-radius: 10px; 
-    overflow: hidden; 
-    margin-bottom: 28px; 
-}
-
-.progress-bar { 
-    height: 100%; 
-    width: 0%; 
-    background: linear-gradient(90deg, #ffd86b, #6bffb8); 
-    transition: width 0.4s ease; 
-}
-
-.question { 
-    font-size: 1.2rem; 
-    text-align: center; 
-    margin-bottom: 24px; 
-    line-height: 1.4; 
-    min-height: 60px; 
-}
-
-.answers { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 12px; 
-}
-
+.progress { height: 8px; background: rgba(255, 255, 255, 0.15); border-radius: 10px; overflow: hidden; margin-bottom: 28px; }
+.progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #ffd86b, #6bffb8); transition: width 0.4s ease; }
+.question { font-size: 1.2rem; text-align: center; margin-bottom: 24px; line-height: 1.4; min-height: 60px; }
+.answers { display: flex; flex-direction: column; gap: 12px; }
 .answer-btn {
-    padding: 14px 20px; 
-    background: rgba(255, 255, 255, 0.1); 
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 14px; 
-    color: #fff; 
-    font-size: 1rem; 
-    cursor: pointer; 
-    transition: all 0.2s; 
-    text-align: left;
+    padding: 14px 20px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px; color: #fff; font-size: 1rem; cursor: pointer; transition: all 0.2s; text-align: left;
 }
-
-.answer-btn:hover { 
-    background: rgba(255, 216, 107, 0.25); 
-    border-color: #ffd86b; 
-    transform: translateX(5px); 
-}
+.answer-btn:hover { background: rgba(255, 216, 107, 0.25); border-color: #ffd86b; transform: translateX(5px); }
 
 /* =========================================
-   МУЛЬТЯШНАЯ SVG ЁЛКА
+   КОМНАТА С ЁЛКОЙ, ОКНОМ И КАМИНОМ
    ========================================= */
-.tree-area { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    gap: 20px; 
-}
-
-.tree { 
-    position: relative; 
+.room-area {
+    position: relative;
     width: 100%;
-    max-width: 340px; 
-    height: 480px; 
-    display: flex; 
-    justify-content: center;
-    margin: 0 auto;
+    height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    /* Фон комнаты (обои) */
+    background: linear-gradient(135deg, #2c1e16 0%, #4a3525 100%);
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
 }
 
-.tree-svg {
+/* Окно */
+.window {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    width: 180px;
+    height: 240px;
+    background: #1a2a4a; /* Ночное небо */
+    border: 10px solid #5c4033; /* Деревянная рама */
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    z-index: 1;
+    overflow: hidden;
+}
+.window-glass {
+    width: 100%; height: 100%;
+    /* Ночной пейзаж за окном */
+    background: linear-gradient(to bottom, #0f172a 0%, #1e293b 100%);
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+}
+.window-divider-v { position: absolute; top: 0; left: 50%; width: 8px; height: 100%; background: #5c4033; transform: translateX(-50%); }
+.window-divider-h { position: absolute; top: 50%; left: 0; width: 100%; height: 8px; background: #5c4033; transform: translateY(-50%); }
+
+/* Камин */
+.fireplace {
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+    width: 200px;
+    height: 280px;
+    z-index: 1;
+}
+.fireplace-top {
+    width: 100%; height: 20px;
+    background: #4a2c16;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.fireplace-body {
+    width: 100%; height: 200px;
+    background: #5c3a21;
+    position: relative;
+    border: 6px solid #3e2010;
+    border-top: none;
+    box-shadow: inset 0 10px 20px rgba(0,0,0,0.6);
+    overflow: hidden;
+}
+.fireplace-base {
+    width: 120%; height: 20px;
+    background: #3e2010;
+    margin-left: -10%;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+}
+
+/* Огонь в камине */
+.fire-glow {
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
+    background: radial-gradient(circle at bottom, rgba(255, 100, 0, 0.6) 0%, transparent 70%);
+    animation: glow 1.5s infinite alternate;
+}
+@keyframes glow {
+    0% { opacity: 0.6; transform: scaleY(1); }
+    100% { opacity: 1; transform: scaleY(1.1); }
+}
+.fire {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 80px;
+}
+.flame {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    border-radius: 50% 50% 20% 20%;
+    animation: flicker 0.1s infinite alternate;
+}
+.flame1 { width: 40px; height: 70px; background: #ff4500; animation-delay: 0s; }
+.flame2 { width: 30px; height: 50px; background: #ff8c00; animation-delay: 0.05s; }
+.flame3 { width: 20px; height: 30px; background: #ffd700; animation-delay: 0.1s; }
+@keyframes flicker {
+    0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+    100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+}
+
+/* Подарки */
+.gift {
+    position: absolute; font-size: 2.5rem;
+    bottom: 20px; z-index: 2;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+}
+.gift-1 { left: 150px; animation: bob 2s infinite alternate; }
+.gift-2 { left: 190px; bottom: 10px; font-size: 2rem; animation: bob 2s infinite alternate-reverse; }
+
+/* Ёлка */
+.tree {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 450px;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+}
+.tree-img {
     width: 100%;
     height: 100%;
-    overflow: visible;
-    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5)); /* Тень для объема */
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.7));
 }
 
 /* Звезда */
 .star {
     position: absolute; 
-    top: -10px; 
+    top: 5px; /* Подстраиваем под макушку картинки */
     left: 50%; 
     transform: translateX(-50%);
     font-size: 3.5rem; 
@@ -242,176 +243,74 @@ body {
     transition: transform 0.2s;
     filter: drop-shadow(0 0 15px #ffd86b);
 }
-
-.star:hover { 
-    transform: translateX(-50%) scale(1.2); 
-}
-
+.star:hover { transform: translateX(-50%) scale(1.2); }
 @keyframes starPulse {
     0%, 100% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 0 10px #ffd86b); }
     50% { transform: translateX(-50%) scale(1.15); filter: drop-shadow(0 0 25px #ffa500); }
 }
 
-/* Игрушки в лотке */
+/* Лоток с игрушками */
 .toys { 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 12px; 
-    justify-content: center; 
-    max-width: 550px; 
-    margin-top: 10px;
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; 
+    max-width: 550px; margin-top: 10px;
 }
-
 .toy {
-    width: 56px; 
-    height: 56px; 
-    border-radius: 50%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    font-size: 1.8rem; 
-    cursor: grab; 
-    background: rgba(255, 255, 255, 0.1); 
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    transition: transform 0.2s, box-shadow 0.2s; 
-    user-select: none;
-    touch-action: none;
+    width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; cursor: grab; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.25);
+    transition: transform 0.2s, box-shadow 0.2s; user-select: none; touch-action: none;
 }
-
-.toy:hover { 
-    transform: scale(1.15) rotate(-6deg); 
-    box-shadow: 0 0 18px rgba(255, 216, 107, 0.6); 
-    border-color: #ffd86b; 
-}
+.toy:hover { transform: scale(1.15) rotate(-6deg); box-shadow: 0 0 18px rgba(255, 216, 107, 0.6); border-color: #ffd86b; }
 
 /* Игрушки на ёлке */
 .toy.on-tree {
-    position: absolute; 
-    animation: dropIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    cursor: default; 
-    z-index: 5; 
-    width: 48px; 
-    height: 48px; 
-    font-size: 1.8rem;
-    background: transparent; 
-    border: none; 
-    box-shadow: none;
+    position: absolute; animation: dropIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: default; z-index: 5; width: 48px; height: 48px; font-size: 1.8rem;
+    background: transparent; border: none; box-shadow: none;
     transform: translate(-50%, -50%);
 }
-
 @keyframes dropIn { 
     0% { transform: translate(-50%, -50%) scale(0) rotate(-180deg); } 
     100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); } 
 }
 
-.counter { 
-    text-align: center; 
-    margin: 20px 0; 
-    color: #ffd86b; 
-    font-weight: 600; 
-    font-size: 1.2rem;
-}
+.counter { text-align: center; margin: 20px 0; color: #ffd86b; font-weight: 600; font-size: 1.2rem; }
 
 /* Результат */
 .card {
     background: linear-gradient(135deg, rgba(255, 216, 107, 0.15), rgba(255, 107, 157, 0.15));
-    border: 2px solid rgba(255, 216, 107, 0.5); 
-    border-radius: 20px; 
-    padding: 32px 24px;
-    text-align: center; 
-    margin-bottom: 20px; 
-    animation: cardGlow 3s ease-in-out infinite;
+    border: 2px solid rgba(255, 216, 107, 0.5); border-radius: 20px; padding: 32px 24px;
+    text-align: center; margin-bottom: 20px; animation: cardGlow 3s ease-in-out infinite;
 }
-
-@keyframes cardGlow { 
-    0%, 100% { box-shadow: 0 0 20px rgba(255, 216, 107, 0.3); } 
-    50% { box-shadow: 0 0 40px rgba(255, 216, 107, 0.6); } 
-}
-
-.card-title { 
-    color: #ffd86b; 
-    font-size: 1.4rem; 
-    margin-bottom: 16px; 
-}
-
-.card-emoji { 
-    font-size: 4rem; 
-    margin: 16px 0; 
-    animation: bob 2s ease-in-out infinite; 
-}
-
-@keyframes bob { 
-    0%, 100% { transform: translateY(0); } 
-    50% { transform: translateY(-10px); } 
-}
-
-.card-text { 
-    font-size: 1.1rem; 
-    line-height: 1.6; 
-    color: #f0f7ff; 
-    margin-bottom: 16px; 
-}
-
-.card-sign { 
-    font-style: italic; 
-    color: #a8c4dd; 
-    font-size: 0.9rem; 
-}
+@keyframes cardGlow { 0%, 100% { box-shadow: 0 0 20px rgba(255, 216, 107, 0.3); } 50% { box-shadow: 0 0 40px rgba(255, 216, 107, 0.6); } }
+.card-title { color: #ffd86b; font-size: 1.4rem; margin-bottom: 16px; }
+.card-emoji { font-size: 4rem; margin: 16px 0; animation: bob 2s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.card-text { font-size: 1.1rem; line-height: 1.6; color: #f0f7ff; margin-bottom: 16px; }
+.card-sign { font-style: italic; color: #a8c4dd; font-size: 0.9rem; }
 
 .global-counter {
-    text-align: center; 
-    background: rgba(0, 0, 0, 0.2); 
-    border-radius: 12px;
-    padding: 12px; 
-    margin-bottom: 24px; 
-    font-size: 1rem; 
-    color: #ffd86b; 
-    font-weight: bold;
+    text-align: center; background: rgba(0, 0, 0, 0.2); border-radius: 12px;
+    padding: 12px; margin-bottom: 24px; font-size: 1rem; color: #ffd86b; font-weight: bold;
 }
+.actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.actions .btn { margin: 0; }
 
-.actions { 
-    display: flex; 
-    gap: 12px; 
-    justify-content: center; 
-    flex-wrap: wrap; 
-}
-
-.actions .btn { 
-    margin: 0; 
-}
-
-/* =========================================
-   МОБИЛЬНАЯ АДАПТАЦИЯ
-   ========================================= */
+/* Мобильная адаптация */
 @media (max-width: 600px) {
     .container { padding: 24px 16px; }
+    .toy { width: 48px; height: 48px; font-size: 1.5rem; }
     
-    .toy { 
-        width: 48px; 
-        height: 48px; 
-        font-size: 1.5rem; 
-    }
+    .room-area { height: 400px; }
+    .tree { width: 240px; height: 340px; }
+    .star { font-size: 2.5rem; top: 0px; }
+    .toy.on-tree { width: 38px; height: 38px; font-size: 1.4rem; }
     
-    .tree { 
-        height: 380px; 
-    }
+    .window { width: 120px; height: 160px; top: 10px; right: 10px; }
+    .fireplace { width: 140px; height: 220px; left: 10px; }
+    .fireplace-body { height: 150px; }
+    .fireplace-top { height: 15px; }
+    .gift-1 { left: 100px; font-size: 2rem; }
+    .gift-2 { display: none; }
     
-    .star { 
-        font-size: 2.5rem; 
-        top: -5px;
-    }
-    
-    .toy.on-tree { 
-        width: 38px; 
-        height: 38px; 
-        font-size: 1.4rem; 
-    }
-    
-    .music-btn { 
-        top: 10px; 
-        right: 10px; 
-        width: 40px; 
-        height: 40px; 
-        font-size: 1.2rem; 
-    }
+    .music-btn { top: 10px; right: 10px; width: 40px; height: 40px; font-size: 1.2rem; }
 }
