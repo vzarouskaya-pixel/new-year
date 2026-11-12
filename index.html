@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 Наряди ёлку желаний</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="snow"></canvas>
+
+    <main class="container">
+        <!-- ЭКРАН 1: Приветствие -->
+        <section class="screen active" id="screen-start">
+            <h1 class="title">🎄 Наряди ёлку желаний 🎄</h1>
+            <p class="subtitle">Ответь на 3 вопроса, наряди ёлку — и получи своё новогоднее пожелание!</p>
+            <button class="btn" onclick="startQuiz()">Начать ✨</button>
+        </section>
+
+        <!-- ЭКРАН 2: Тест -->
+        <section class="screen" id="screen-quiz">
+            <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+            <h2 class="question" id="questionText"></h2>
+            <div class="answers" id="answersBox"></div>
+        </section>
+
+        <!-- ЭКРАН 3: Ёлка -->
+        <section class="screen" id="screen-tree">
+            <h2 class="section-title">Укрась ёлку! 🎁</h2>
+            <p class="hint">Перетащи 5 игрушек на ёлку (или кликни по ним)</p>
+            <div class="tree-area">
+                <div class="tree" id="tree">
+                    <div class="star" id="star">⭐</div>
+                    <div class="tree-body"></div>
+                    <div class="tree-trunk"></div>
+                </div>
+                <div class="toys" id="toysBox"></div>
+            </div>
+            <p class="counter">Украшений: <span id="toyCount">0</span> / 5</p>
+            <button class="btn hidden" id="finishBtn" onclick="showResult()">Получить пожелание 🎁</button>
+        </section>
+
+        <!-- ЭКРАН 4: Результат -->
+        <section class="screen" id="screen-result">
+            <div class="card" id="resultCard">
+                <h2 class="card-title">🎉 С Новым годом! 🎉</h2>
+                <div class="card-emoji" id="resultEmoji">🎄</div>
+                <p class="card-text" id="resultText"></p>
+                <p class="card-sign">— Твой новогодний эльф 🧝</p>
+            </div>
+            <div class="actions">
+                <button class="btn btn-secondary" onclick="restart()">🔄 Заново</button>
+                <button class="btn" onclick="shareResult()">📤 Поделиться</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
