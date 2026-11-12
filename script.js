@@ -96,7 +96,7 @@ function selectAnswer(type) {
     }
 }
 
-// ============ ЁЛКА И СВОБОДНОЕ РАСПРЕДЕЛЕНИЕ ============
+// ============ ЁЛКА И БЕСКОНЕЧНЫЕ ИГРУШКИ ============
 const toyEmojis = ['🎁', '🔔', '🍬', '⛄', '❤️', '🌟', '🍭', '🧸', '🎈', '🪅', '📦', '🎊', '🍏', '🍎', '🔮', '🦌'];
 let placedToys = 0;
 const TOTAL_TOYS = 12; 
@@ -106,11 +106,13 @@ function initTreeGame() {
     document.getElementById('toyCount').textContent = '0';
     document.getElementById('finishBtn').classList.add('hidden');
 
+    // Очищаем ёлку от старых игрушек
     document.querySelectorAll('.toy.on-tree').forEach(t => t.remove());
 
     const toysBox = document.getElementById('toysBox');
     toysBox.innerHTML = '';
 
+    // Берем все игрушки (или 14 случайных для разнообразия)
     const shuffled = [...toyEmojis].sort(() => Math.random() - 0.5).slice(0, 14);
 
     shuffled.forEach(emoji => {
@@ -136,7 +138,8 @@ function handleDragStart(e) {
 
 function handleDrop(e) {
     e.preventDefault();
-    if (!draggedToy || draggedToy.classList.contains('used')) return;
+    // Убрали проверку на 'used', теперь можно брать сколько угодно раз
+    if (!draggedToy) return;
 
     const tree = document.getElementById('tree');
     const treeRect = tree.getBoundingClientRect();
@@ -144,37 +147,36 @@ function handleDrop(e) {
     let x = e.clientX - treeRect.left;
     let y = e.clientY - treeRect.top;
 
-    // Проверка границ, чтобы игрушки не висели в воздухе
+    // Проверка границ (чтобы не вешали мимо)
     if (x < 10 || x > treeRect.width - 10 || y < 30 || y > treeRect.height - 20) {
         draggedToy.style.opacity = '1';
         draggedToy = null;
         return;
     }
 
-    createPlacedToy(draggedToy, x, y);
+    createPlacedToy(draggedToy.textContent, x, y);
+    
+    // Возвращаем прозрачность (игрушка не исчезает)
     draggedToy.style.opacity = '1';
     draggedToy = null;
 }
 
 function placeToyRandom(toy) {
-    if (toy.classList.contains('used')) return;
     const tree = document.getElementById('tree');
     const treeRect = tree.getBoundingClientRect();
     
     const x = (Math.random() * 0.6 + 0.2) * treeRect.width; 
     const y = (Math.random() * 0.6 + 0.15) * treeRect.height; 
     
-    createPlacedToy(toy, x, y);
+    createPlacedToy(toy.textContent, x, y);
 }
 
-function createPlacedToy(toyElement, x, y) {
+function createPlacedToy(emoji, x, y) {
     if (placedToys >= TOTAL_TOYS) return;
-
-    toyElement.classList.add('used');
 
     const placed = document.createElement('div');
     placed.className = 'toy on-tree';
-    placed.textContent = toyElement.textContent;
+    placed.textContent = emoji;
     placed.style.left = `${x}px`;
     placed.style.top = `${y}px`;
     placed.style.rotate = `${Math.random() * 40 - 20}deg`;
