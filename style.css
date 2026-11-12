@@ -1,31 +1,498 @@
-/* Игрушки на ёлке */
-.toys { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; max-width: 550px; }
-.toy {
-    width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 1.8rem; cursor: grab; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.25);
-    transition: transform 0.2s, box-shadow 0.2s; user-select: none;
-    /* Добавлено для корректного перетаскивания на телефонах */
-    touch-action: none; 
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
 }
-.toy:hover { transform: scale(1.15) rotate(-6deg); box-shadow: 0 0 18px rgba(255, 216, 107, 0.6); border-color: #ffd86b; }
-.toy.used { opacity: 0.25; pointer-events: none; transform: scale(0.8); }
 
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', 'Comic Sans MS', sans-serif;
+    background: linear-gradient(180deg, #0b1e3d 0%, #1a3a6b 50%, #2c5f8a 100%);
+    color: #fff;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#snow { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    z-index: 1; 
+}
+
+/* Кнопка музыки */
+.music-btn {
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    width: 50px; 
+    height: 50px;
+    border-radius: 50%; 
+    background: rgba(255, 255, 255, 0.15); 
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white; 
+    font-size: 1.5rem; 
+    cursor: pointer; 
+    z-index: 10;
+    transition: all 0.3s; 
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.music-btn:hover { 
+    background: rgba(255, 255, 255, 0.3); 
+    transform: scale(1.1); 
+}
+
+.container {
+    position: relative; 
+    z-index: 2; 
+    max-width: 800px; 
+    width: 100%;
+    background: rgba(255, 255, 255, 0.07); 
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px; 
+    padding: 32px 24px; 
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.screen { 
+    display: none; 
+    animation: fadeIn 0.5s ease; 
+}
+
+.screen.active { 
+    display: block; 
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(15px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+.title {
+    font-size: clamp(1.6rem, 5vw, 2.4rem); 
+    text-align: center;
+    background: linear-gradient(90deg, #ffd86b, #ff6b9d, #6bffb8, #ffd86b);
+    background-size: 300%; 
+    -webkit-background-clip: text; 
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    animation: shimmer 4s linear infinite; 
+    margin-bottom: 16px;
+}
+
+@keyframes shimmer { 
+    to { background-position: 300%; } 
+}
+
+.subtitle { 
+    text-align: center; 
+    color: #cfe2f3; 
+    margin-bottom: 28px; 
+    line-height: 1.5; 
+}
+
+.section-title { 
+    text-align: center; 
+    font-size: 1.4rem; 
+    margin-bottom: 8px; 
+    color: #ffd86b; 
+}
+
+.hint { 
+    text-align: center; 
+    color: #a8c4dd; 
+    font-size: 0.9rem; 
+    margin-bottom: 20px; 
+}
+
+.btn {
+    display: block; 
+    margin: 0 auto; 
+    padding: 14px 36px; 
+    font-size: 1.1rem; 
+    font-weight: 600;
+    border: none; 
+    border-radius: 50px; 
+    cursor: pointer;
+    background: linear-gradient(135deg, #ff6b9d, #ffd86b); 
+    color: #1a1a2e;
+    transition: transform 0.2s, box-shadow 0.2s; 
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+}
+
+.btn:hover { 
+    transform: translateY(-2px) scale(1.03); 
+    box-shadow: 0 12px 28px rgba(255, 107, 157, 0.6); 
+}
+
+.btn:active { 
+    transform: scale(0.98); 
+}
+
+.btn-secondary { 
+    background: rgba(255, 255, 255, 0.15); 
+    color: #fff; 
+    box-shadow: none; 
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.hidden { 
+    display: none !important; 
+}
+
+/* Тест */
+.progress { 
+    height: 8px; 
+    background: rgba(255, 255, 255, 0.15); 
+    border-radius: 10px; 
+    overflow: hidden; 
+    margin-bottom: 28px; 
+}
+
+.progress-bar { 
+    height: 100%; 
+    width: 0%; 
+    background: linear-gradient(90deg, #ffd86b, #6bffb8); 
+    transition: width 0.4s ease; 
+}
+
+.question { 
+    font-size: 1.2rem; 
+    text-align: center; 
+    margin-bottom: 24px; 
+    line-height: 1.4; 
+    min-height: 60px; 
+}
+
+.answers { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+}
+
+.answer-btn {
+    padding: 14px 20px; 
+    background: rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px; 
+    color: #fff; 
+    font-size: 1rem; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+    text-align: left;
+}
+
+.answer-btn:hover { 
+    background: rgba(255, 216, 107, 0.25); 
+    border-color: #ffd86b; 
+    transform: translateX(5px); 
+}
+
+/* =========================================
+   ЁЛКА
+   ========================================= */
+.tree-area { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 30px; 
+}
+
+.tree { 
+    position: relative; 
+    width: 320px; 
+    height: 440px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: flex-end;
+    margin: 0 auto;
+}
+
+/* Ствол */
+.tree-trunk { 
+    position: absolute; 
+    bottom: 0; 
+    width: 40px; 
+    height: 60px; 
+    background: linear-gradient(90deg, #4a2c16, #7a4b2a, #4a2c16); 
+    border-radius: 4px;
+    z-index: 1;
+}
+
+/* Слои (ветки) */
+.tree-layer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0; 
+    border-left: solid transparent; 
+    border-right: solid transparent; 
+    border-bottom: solid #1e7b3f;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4));
+    z-index: 2;
+}
+
+.tree-layer-top {
+    bottom: 210px;
+    border-left-width: 90px; 
+    border-right-width: 90px; 
+    border-bottom-width: 180px;
+    border-bottom-color: #25934a;
+    z-index: 4;
+}
+
+.tree-layer-mid {
+    bottom: 110px;
+    border-left-width: 140px; 
+    border-right-width: 140px; 
+    border-bottom-width: 200px;
+    border-bottom-color: #1e7b3f;
+    z-index: 3;
+}
+
+.tree-layer-bot {
+    bottom: 0;
+    border-left-width: 190px; 
+    border-right-width: 190px; 
+    border-bottom-width: 200px;
+    border-bottom-color: #155e2f;
+    z-index: 2;
+}
+
+/* Звезда */
+.star {
+    position: absolute; 
+    top: -10px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    font-size: 3rem; 
+    animation: starPulse 2s ease-in-out infinite; 
+    z-index: 10; 
+    cursor: pointer; 
+    transition: transform 0.2s;
+}
+
+.star:hover { 
+    transform: translateX(-50%) scale(1.2); 
+}
+
+@keyframes starPulse {
+    0%, 100% { transform: translateX(-50%) scale(1); filter: drop-shadow(0 0 10px #ffd86b); }
+    50% { transform: translateX(-50%) scale(1.15); filter: drop-shadow(0 0 25px #ffd86b); }
+}
+
+/* Игрушки в лотке */
+.toys { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 12px; 
+    justify-content: center; 
+    max-width: 550px; 
+    margin-top: 10px;
+}
+
+.toy {
+    width: 56px; 
+    height: 56px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 1.8rem; 
+    cursor: grab; 
+    background: rgba(255, 255, 255, 0.1); 
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    transition: transform 0.2s, box-shadow 0.2s; 
+    user-select: none;
+    touch-action: none; /* Важно для перетаскивания на мобильных */
+}
+
+.toy:hover { 
+    transform: scale(1.15) rotate(-6deg); 
+    box-shadow: 0 0 18px rgba(255, 216, 107, 0.6); 
+    border-color: #ffd86b; 
+}
+
+.toy.used { 
+    opacity: 0.25; 
+    pointer-events: none; 
+    transform: scale(0.8); 
+}
+
+/* Игрушки на ёлке */
 .toy.on-tree {
     position: absolute; 
     animation: dropIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor: default; 
     z-index: 5; 
-    width: 48px; height: 48px; font-size: 1.8rem;
-    background: transparent; border: none; box-shadow: none;
-    /* Центрируем игрушку ровно по курсору */
-    transform: translate(-50%, -50%);
+    width: 48px; 
+    height: 48px; 
+    font-size: 1.8rem;
+    background: transparent; 
+    border: none; 
+    box-shadow: none;
+    transform: translate(-50%, -50%); /* Центрируем по координатам */
 }
+
 @keyframes dropIn { 
     0% { transform: translate(-50%, -50%) scale(0) rotate(-180deg); } 
     100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); } 
 }
 
-/* На мобильных игрушки чуть меньше */
+.counter { 
+    text-align: center; 
+    margin: 20px 0; 
+    color: #ffd86b; 
+    font-weight: 600; 
+    font-size: 1.2rem;
+}
+
+/* Результат */
+.card {
+    background: linear-gradient(135deg, rgba(255, 216, 107, 0.15), rgba(255, 107, 157, 0.15));
+    border: 2px solid rgba(255, 216, 107, 0.5); 
+    border-radius: 20px; 
+    padding: 32px 24px;
+    text-align: center; 
+    margin-bottom: 20px; 
+    animation: cardGlow 3s ease-in-out infinite;
+}
+
+@keyframes cardGlow { 
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 216, 107, 0.3); } 
+    50% { box-shadow: 0 0 40px rgba(255, 216, 107, 0.6); } 
+}
+
+.card-title { 
+    color: #ffd86b; 
+    font-size: 1.4rem; 
+    margin-bottom: 16px; 
+}
+
+.card-emoji { 
+    font-size: 4rem; 
+    margin: 16px 0; 
+    animation: bob 2s ease-in-out infinite; 
+}
+
+@keyframes bob { 
+    0%, 100% { transform: translateY(0); } 
+    50% { transform: translateY(-10px); } 
+}
+
+.card-text { 
+    font-size: 1.1rem; 
+    line-height: 1.6; 
+    color: #f0f7ff; 
+    margin-bottom: 16px; 
+}
+
+.card-sign { 
+    font-style: italic; 
+    color: #a8c4dd; 
+    font-size: 0.9rem; 
+}
+
+.global-counter {
+    text-align: center; 
+    background: rgba(0, 0, 0, 0.2); 
+    border-radius: 12px;
+    padding: 12px; 
+    margin-bottom: 24px; 
+    font-size: 1rem; 
+    color: #ffd86b; 
+    font-weight: bold;
+}
+
+.actions { 
+    display: flex; 
+    gap: 12px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+}
+
+.actions .btn { 
+    margin: 0; 
+}
+
+/* =========================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+   ========================================= */
 @media (max-width: 600px) {
-    .toy.on-tree { width: 38px; height: 38px; font-size: 1.4rem; }
+    .container { padding: 24px 16px; }
+    
+    /* Уменьшаем лоток */
+    .toy { 
+        width: 48px; 
+        height: 48px; 
+        font-size: 1.5rem; 
+    }
+    
+    /* Уменьшаем ёлку */
+    .tree { 
+        width: 260px; 
+        height: 380px; 
+    }
+    
+    .tree-layer-top { 
+        border-left-width: 70px; 
+        border-right-width: 70px; 
+        border-bottom-width: 150px; 
+        bottom: 180px; 
+    }
+    
+    .tree-layer-mid { 
+        border-left-width: 115px; 
+        border-right-width: 115px; 
+        border-bottom-width: 170px; 
+        bottom: 90px; 
+    }
+    
+    .tree-layer-bot { 
+        border-left-width: 155px; 
+        border-right-width: 155px; 
+        border-bottom-width: 180px; 
+        bottom: 0; 
+    }
+    
+    .tree-trunk { 
+        height: 40px; 
+        width: 30px; 
+    }
+    
+    .star { 
+        font-size: 2.5rem; 
+        top: -5px; 
+    }
+    
+    /* Уменьшаем игрушки на ёлке */
+    .toy.on-tree { 
+        width: 38px; 
+        height: 38px; 
+        font-size: 1.4rem; 
+    }
+    
+    .music-btn { 
+        top: 10px; 
+        right: 10px; 
+        width: 40px; 
+        height: 40px; 
+        font-size: 1.2rem; 
+    }
 }
